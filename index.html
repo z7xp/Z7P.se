@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z7p Bouncing</title>
+    <title>Z7P!!!1!</title>
     <style>
         body {
             margin: 0;
@@ -24,7 +24,21 @@
 </head>
 <body>
     <img id="z7p" src="z7p.png" alt="z7p">
+    
+    <audio id="background-music" autoplay loop>
+        <source src="ez4ence.mp3" type="audio/mpeg">
+    </audio>
+    
     <script>
+        // Ensure the music plays even if autoplay is blocked initially
+        document.addEventListener("DOMContentLoaded", () => {
+            const audio = document.getElementById("background-music");
+            audio.play().catch(() => {
+                document.body.addEventListener("click", () => audio.play(), { once: true });
+            });
+        });
+
+        // Bouncing animation
         const z7p = document.getElementById('z7p');
         let x = 100, y = 100;
         let dx = 2, dy = 2;
