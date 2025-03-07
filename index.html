@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Bouncing</title>
+    <title>Z7p Bouncing</title>
     <style>
         body {
             margin: 0;
@@ -22,14 +22,14 @@
     </style>
 </head>
 <body>
-    <img id="cat" src="z7p.png" alt="LESSGOOOO">
+    <img id="z7p" src="z7p.png" alt="z7p">
     <script>
-        const cat = document.getElementById('cat');
+        const z7p = document.getElementById('z7p');
         let x = 100, y = 100;
         let dx = 2, dy = 2;
         const update = () => {
-            const maxX = window.innerWidth - cat.width;
-            const maxY = window.innerHeight - cat.height;
+            const maxX = window.innerWidth - z7p.width;
+            const maxY = window.innerHeight - z7p.height;
             
             x += dx;
             y += dy;
@@ -37,8 +37,8 @@
             if (x <= 0 || x >= maxX) dx *= -1;
             if (y <= 0 || y >= maxY) dy *= -1;
             
-            cat.style.left = `${x}px`;
-            cat.style.top = `${y}px`;
+            z7p.style.left = `${x}px`;
+            z7p.style.top = `${y}px`;
             
             requestAnimationFrame(update);
         };
