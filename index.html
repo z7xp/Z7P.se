@@ -3,19 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Type Anywhere</title>
+    <title>Cat Bouncing</title>
     <style>
         body {
             margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            font-size: 20px;
-            white-space: pre-wrap;
-            cursor: text;
+            overflow: hidden;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        img {
+            position: absolute;
+            width: 150px;
+            height: auto;
         }
     </style>
 </head>
-<body contenteditable="true">
-    Click anywhere and start typing...
+<body>
+    <img id="cat" src="z7p.png" alt="LESSGOOOO">
+    <script>
+        const cat = document.getElementById('cat');
+        let x = 100, y = 100;
+        let dx = 2, dy = 2;
+        const update = () => {
+            const maxX = window.innerWidth - cat.width;
+            const maxY = window.innerHeight - cat.height;
+            
+            x += dx;
+            y += dy;
+            
+            if (x <= 0 || x >= maxX) dx *= -1;
+            if (y <= 0 || y >= maxY) dy *= -1;
+            
+            cat.style.left = `${x}px`;
+            cat.style.top = `${y}px`;
+            
+            requestAnimationFrame(update);
+        };
+        update();
+    </script>
 </body>
 </html>
