@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<link rel="icon" href="assets/z7p.png" type="image/png">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z7P</title>
+    <title>Bouncing Z7P</title>
     <style>
         body {
             margin: 0;
@@ -14,50 +13,68 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
+        }
+        #container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
         img {
             position: absolute;
-            width: 150px;
+            width: 100px;
             height: auto;
+        }
+        button {
+            position: absolute;
+            top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #addZ7P {
+            left: 10px;
         }
     </style>
 </head>
 <body>
-    <img id="z7p" src="z7p.png" alt="z7p">
-    
-    <audio id="background-music" autoplay loop>
-        <source src="ez4ence.mp3" type="audio/mpeg">
-    </audio>
-    
+    <button id="addZ7P">Add Z7P</button>
+    <div id="container"></div>
     <script>
-        // Ensure the music plays even if autoplay is blocked initially
-        document.addEventListener("DOMContentLoaded", () => {
-            const audio = document.getElementById("background-music");
-            audio.play().catch(() => {
-                document.body.addEventListener("click", () => audio.play(), { once: true });
-            });
-        });
-
-        // Bouncing animation
-        const z7p = document.getElementById('z7p');
-        let x = 100, y = 100;
-        let dx = 20, dy = 20;
-        const update = () => {
-            const maxX = window.innerWidth - z7p.width;
-            const maxY = window.innerHeight - z7p.height;
+        const container = document.getElementById('container');
+        const addZ7PBtn = document.getElementById('addZ7P');
+        
+        function createZ7P() {
+            const z7p = document.createElement('img');
+            z7p.src = 'z7p.png';
+            container.appendChild(z7p);
             
-            x += dx;
-            y += dy;
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            let dx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
+            let dy = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
             
-            if (x <= 0 || x >= maxX) dx *= -1;
-            if (y <= 0 || y >= maxY) dy *= -1;
-            
-            z7p.style.left = `${x}px`;
-            z7p.style.top = `${y}px`;
-            
-            requestAnimationFrame(update);
-        };
-        update();
+            function moveZ7P() {
+                const maxX = window.innerWidth - 100;
+                const maxY = window.innerHeight - 100;
+                
+                x += dx;
+                y += dy;
+                
+                if (x <= 0 || x >= maxX) dx *= -1;
+                if (y <= 0 || y >= maxY) dy *= -1;
+                
+                z7p.style.left = `${x}px`;
+                z7p.style.top = `${y}px`;
+                
+                requestAnimationFrame(moveZ7P);
+            }
+            moveZ7P();
+        }
+        
+        addZ7PBtn.addEventListener('click', createZ7P);
     </script>
 </body>
 </html>
