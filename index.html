@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bouncing Z7P</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         body {
             margin: 0;
@@ -35,7 +36,7 @@
             console.log("Adding a new Z7P...");
 
             const z7p = document.createElement('img');
-            z7p.src = 'z7p.png';
+            z7p.src = 'z7p.png'; 
             z7p.style.width = "100px";
             z7p.style.height = "auto";
             z7p.style.position = "absolute";
@@ -64,8 +65,7 @@
             moveZ7P();
         }
 
-        // Add a new Z7P every 5 seconds
-        setInterval(createZ7P, 5000);
+        setInterval(createZ7P, 50);
     </script>
 </body>
 </html>
