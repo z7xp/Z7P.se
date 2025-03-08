@@ -8,12 +8,7 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #f8f8f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
+            background-color: #a9a9a9;
         }
         #container {
             position: absolute;
@@ -27,54 +22,50 @@
             width: 100px;
             height: auto;
         }
-        button {
-            position: absolute;
-            top: 10px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #addZ7P {
-            left: 10px;
-        }
     </style>
 </head>
 <body>
-    <button id="addZ7P">Add Z7P</button>
+    <audio id="backgroundMusic" src="music.mp3" autoplay loop></audio>
     <div id="container"></div>
     <script>
         const container = document.getElementById('container');
-        const addZ7PBtn = document.getElementById('addZ7P');
+        const backgroundMusic = document.getElementById('backgroundMusic');
         
         function createZ7P() {
+            console.log("Adding a new Z7P...");
+
             const z7p = document.createElement('img');
             z7p.src = 'z7p.png';
+            z7p.style.width = "100px";
+            z7p.style.height = "auto";
+            z7p.style.position = "absolute";
             container.appendChild(z7p);
-            
+
             let x = Math.random() * (window.innerWidth - 100);
             let y = Math.random() * (window.innerHeight - 100);
             let dx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
             let dy = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
-            
+
             function moveZ7P() {
                 const maxX = window.innerWidth - 100;
                 const maxY = window.innerHeight - 100;
-                
+
                 x += dx;
                 y += dy;
-                
+
                 if (x <= 0 || x >= maxX) dx *= -1;
                 if (y <= 0 || y >= maxY) dy *= -1;
-                
+
                 z7p.style.left = `${x}px`;
                 z7p.style.top = `${y}px`;
-                
+
                 requestAnimationFrame(moveZ7P);
             }
             moveZ7P();
         }
-        
-        addZ7PBtn.addEventListener('click', createZ7P);
+
+        // Add a new Z7P every 5 seconds
+        setInterval(createZ7P, 5000);
     </script>
 </body>
 </html>
