@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z7P Float</title>
+    <link rel="icon" type="image/png" href="https://www.z7p.se/favicon.png">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #a9a9a9;
+        }
+        #container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        img {
+            position: absolute;
+            width: 100px;
+            height: auto;
+        }
+        #startButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        #startButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Start Button -->
+    <button id="startButton">Start Z7P</button>
+
+    <div id="container"></div>
+
+    <script>
+        const container = document.getElementById('container');
+        const startButton = document.getElementById('startButton');
+        
+        let gameStarted = false;
+
+        // Function to create and play a new VineBoom sound effect
+        function playVineBoomSound() {
+            const vineBoomSound = new Audio("https://www.z7p.se/vineboom.mp3");
+            vineBoomSound.play().then(() => {
+                console.log('VineBoom sound played successfully.');
+            }).catch(error => {
+                console.error('Error playing VineBoom sound:', error);
+            });
+        }
+
+        // Function to start the game
+        startButton.addEventListener('click', function() {
+            if (!gameStarted) {
+                console.log('Game Started! Z7P appearing and VineBoom sound playing.');
+                gameStarted = true;
+                startButton.style.display = 'none'; // Hide the button after start
+
+                // Preload and play the VineBoom sound once when the game starts
+                playVineBoomSound();
+
+                // Start the Z7P animation
+                setInterval(createZ7P, 50);
+            }
+        });
+
+        // Function to create Z7P elements
+        function createZ7P() {
+            console.log("Adding a new Z7P...");
+
+            const z7p = document.createElement('img');
+            z7p.src = 'https://www.z7p.se/z7p.png'; // Ensure this is the correct path to your image
+            z7p.style.width = "100px";
+            z7p.style.height = "auto";
+            z7p.style.position = "absolute";
+            container.appendChild(z7p);
+
+            // Play VineBoom sound whenever a new Z7P appears
+            playVineBoomSound();
+
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
+            let dx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
+            let dy = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
+
+            function moveZ7P() {
+                const maxX = window.innerWidth - 100;
+                const maxY = window.innerHeight - 100;
+
+                x += dx;
+                y += dy;
+
+                if (x <= 0 || x >= maxX) dx *= -1;
+                if (y <= 0 || y >= maxY) dy *= -1;
+
+                z7p.style.left = `${x}px`;
+                z7p.style.top = `${y}px`;
+
+                requestAnimationFrame(moveZ7P);
+            }
+            moveZ7P();
+        }
+    </script>
+</body>
+</html>

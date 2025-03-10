@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+    <title>z7p Aimtrainer</title>
+    <link rel="icon" type="image/png" href="https://www.z7p.se/favicon.png">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-image: url('https://z7p.se/bliss.png');
+            background-size: cover;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            position: relative;
+            user-select: none;
+        }
+        #container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #flashbang {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://z7p.se/white.png');
+            background-size: cover;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s ease-in-out;
+            z-index: 9999;
+        }
+        #scoreBoard, #timer {
+            position: absolute;
+            top: 20px;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px black;
+        }
+        #scoreBoard { left: 20px; }
+        #timer { right: 20px; }
+        #endScreen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            display: none;
+            z-index: 9999;
+        }
+        #resetButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        #startButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4CAF50;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 9999;
+        }
+        #gameTitle {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5rem;
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            color: red;
+            text-shadow: 2px 2px 4px black;
+        }
+        #subtitle, #description {
+            position: absolute;
+            font-size: 2rem;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+        }
+        #subtitle { bottom: 150px; left: 50%; transform: translateX(-50%); }
+        #description { bottom: 100px; left: 50%; transform: translateX(-50%); }
+        #versionDisplay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 1rem;
+            color: white;
+            z-index: 9999;
+        }
+        .clickable { position: absolute; cursor: pointer; width: 150px; height: 150px; }
+        #akGuy {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10000;
+            display: none;
+            background-image: url('https://z7p.se/akguy.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameTitle">z7p Aimtrainer!!!1111!!1!</div>
+    <div id="subtitle">Can you Click Fast Enough?</div>
+    <div id="description">Click the images to explode them and get points! But beware, things get faster!</div>
+    <div id="flashbang"></div>
+    <audio id="backgroundMusic" src="https://z7p.se/music.mp3" loop></audio>
+    <audio id="flashbangSound" src="https://z7p.se/flashbang.mp3"></audio>
+    <audio id="endMusic" src="https://z7p.se/ez4ence_end.mp3"></audio>
+    <audio id="explosionSound" src="https://z7p.se/explosion.mp3"></audio>
+    <audio id="mynameSound" src="https://z7p.se/myname.mp3"></audio>
+    <div id="akGuy"></div>
+    <div id="container"></div>
+    <div id="scoreBoard">Score: 0</div>
+    <div id="timer">Time: 02:34</div>
+    <div id="endScreen">
+        <p>Game Over! Final Score: <span id="finalScore"></span></p>
+        <button id="resetButton">Restart Game</button>
+    </div>
+    <button id="startButton">Start Game</button>
+    <div id="versionDisplay">Version 1.3</div>
+
+    <script>
+        const container = document.getElementById('container');
+        const scoreBoard = document.getElementById('scoreBoard');
+        const timerBoard = document.getElementById('timer');
+        const flashbangElement = document.getElementById('flashbang');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const endMusic = document.getElementById('endMusic');
+        const explosionSound = document.getElementById('explosionSound');
+        const flashbangSound = document.getElementById('flashbangSound');
+        const akGuy = document.getElementById('akGuy');
+        const endScreen = document.getElementById('endScreen');
+        const resetButton = document.getElementById('resetButton');
+        const startButton = document.getElementById('startButton');
+        const subtitle = document.getElementById('subtitle');
+        const description = document.getElementById('description');
+        const versionDisplay = document.getElementById('versionDisplay');
+
+        let score = 0;
+        let gameRunning = false;
+        let timeLeft = 149;
+        let gameTimer;
+        let flashbangTimer;
+        let countdownTimer;
+        let activeImages = 0;
+        const maxImages = 50;
+        let akGuyTimer;
+        let akGuyActive = false;
+
+        function createZ7P() {
+            if (!gameRunning || activeImages >= maxImages) return;
+
+            const imageType = Math.random() < 0.5 ? 'z7p' : (Math.random() < 0.75 ? 'z7p1' : 'z7p2');
+            const image = document.createElement('img');
+            image.src = `https://z7p.se/${imageType}.png`;
+            image.classList.add('clickable');
+            container.appendChild(image);
+
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 150);
+
+            let dx = Math.random() * 6 + 2;
+            let dy = Math.random() * 6 + 2;
+
+            let points = imageType === 'z7p' ? 1 : imageType === 'z7p1' ? 2 : 3;
+
+            function moveZ7P() {
+                if (!gameRunning) return;
+                x += dx;
+                y += dy;
+
+                if (x <= 0 || x >= window.innerWidth - 150) dx *= -1;
+                if (y <= 0 || y >= window.innerHeight - 150) dy *= -1;
+
+                image.style.left = `${x}px`;
+                image.style.top = `${y}px`;
+
+                requestAnimationFrame(moveZ7P);
+            }
+            moveZ7P();
+
+            image.addEventListener('click', () => explodeImage(image, points));
+            activeImages++;
+
+            setTimeout(() => {
+                if (image.parentNode) {
+                    image.remove();
+                    activeImages--;
+                }
+            }, 5000);
+        }
+
+        function explodeImage(image, points) {
+            score += points;
+            scoreBoard.textContent = `Score: ${score}`;
+            explosionSound.play();
+            image.remove();
+            activeImages--;
+
+            const explosion = document.createElement('img');
+            explosion.src = 'https://z7p.se/explosion.gif';
+            explosion.style.position = 'absolute';
+            explosion.style.left = image.style.left;
+            explosion.style.top = image.style.top;
+            container.appendChild(explosion);
+            setTimeout(() => explosion.remove(), 500);
+        }
+
+        function triggerFlashbang() {
+            flashbangElement.style.opacity = 1;
+            flashbangSound.play();
+
+            setTimeout(() => {
+                flashbangElement.style.opacity = 0;
+                const blurEffect = document.createElement('div');
+                blurEffect.style.position = 'fixed';
+                blurEffect.style.top = '0';
+                blurEffect.style.left = '0';
+                blurEffect.style.width = '100%';
+                blurEffect.style.height = '100%';
+                blurEffect.style.backgroundColor = 'white';
+                blurEffect.style.filter = 'blur(5px)';
+                blurEffect.style.zIndex = 9999;
+                document.body.appendChild(blurEffect);
+
+                setTimeout(() => blurEffect.remove(), 1000);
+            }, 500);
+        }
+
+        function showAkGuy() {
+            if (akGuyActive || !gameRunning) return;
+
+            akGuyActive = true;
+            akGuy.style.display = 'block';
+            mynameSound.play();
+
+            setTimeout(() => {
+                akGuy.style.display = 'none';
+                akGuyActive = false;
+            }, 10000);
+        }
+
+        function startGame() {
+            gameRunning = true;
+            startButton.style.display = "none";
+            backgroundMusic.play();
+            subtitle.style.display = "none";
+            description.style.display = "none";
+            timerBoard.style.display = "block";
+            gameTimer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    endGame();
+                } else {
+                    timeLeft--;
+                    timerBoard.textContent = `Time: ${Math.floor(timeLeft / 60)}:${timeLeft % 60}`;
+                }
+            }, 1000);
+
+            flashbangTimer = setInterval(() => {
+                triggerFlashbang();
+            }, Math.random() * 20000 + 5000);
+
+            setInterval(() => createZ7P(), 500);
+
+            akGuyTimer = setInterval(() => {
+                if (timeLeft > 90) return;
+                showAkGuy();
+            }, 15000);
+        }
+
+        function endGame() {
+            gameRunning = false;
+            backgroundMusic.pause();
+            endMusic.play();
+            endScreen.style.display = "block";
+            document.getElementById('finalScore').textContent = score;
+            clearInterval(gameTimer);
+            clearInterval(flashbangTimer);
+            clearInterval(akGuyTimer);
+
+            const images = document.querySelectorAll('.clickable');
+            images.forEach(image => explodeImage(image, 0));
+        }
+
+        startButton.addEventListener('click', startGame);
+        resetButton.addEventListener('click', () => location.reload());
+    </script>
+</body>
+</html>
