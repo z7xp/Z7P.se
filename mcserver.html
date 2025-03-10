@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mc.z7p.se - Minecraft Server</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282828;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            background-color: #222;
+            padding: 20px;
+        }
+
+        #header h1 {
+            margin: 0;
+        }
+
+        #status {
+            margin: 20px;
+            font-size: 1.5rem;
+        }
+
+        .online {
+            color: green;
+        }
+
+        .offline {
+            color: red;
+        }
+
+        #description {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        #footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #222;
+            color: #aaa;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <h1>Welcome to mc.z7p.se Minecraft Server</h1>
+    </div>
+
+    <div id="status">
+        <p>Server Status: <span id="serverStatus" class="offline">Checking...</span></p>
+    </div>
+
+    <div id="description">
+        <p>Server Title: <strong>z7p Minecraft Server</strong></p>
+        <p>NO FUN ALLOWED!</p>
+    </div>
+
+    <div id="footer">
+        <p>&copy; 2025 z7p Minecraft Server</p>
+    </div>
+
+    <script>
+        // Server details
+        const serverIp = 'mc.z7p.se'; // Server IP (your MC server's IP)
+        const serverPort = 25565; // Default Minecraft port
+
+        // Function to check the server status
+        async function checkServerStatus() {
+            const statusElement = document.getElementById('serverStatus');
+
+            try {
+                const response = await fetch(`https://api.mcsrvstat.us/2/${serverIp}`);
+                const data = await response.json();
+
+                if (data.online) {
+                    statusElement.textContent = 'Online';
+                    statusElement.classList.remove('offline');
+                    statusElement.classList.add('online');
+                } else {
+                    statusElement.textContent = 'Offline';
+                    statusElement.classList.remove('online');
+                    statusElement.classList.add('offline');
+                }
+            } catch (error) {
+                statusElement.textContent = 'Error checking status';
+                statusElement.classList.remove('online');
+                statusElement.classList.add('offline');
+            }
+        }
+
+        // Call the function to check the server status
+        checkServerStatus();
+    </script>
+
+</body>
+</html>
