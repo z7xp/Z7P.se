@@ -1,316 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale: 1.0">
-    <title>z7p Aimtrainer</title>
-    <link rel="icon" type="image/png" href="https://www.z7p.se/favicon.png">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-image: url('https://z7p.se/bliss.png');
-            background-size: cover;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-            position: relative;
-            user-select: none;
-        }
-        #container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        #flashbang {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://z7p.se/white.png');
-            background-size: cover;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.7s ease-in-out;
-            z-index: 9999;
-        }
-        #scoreBoard, #timer {
-            position: absolute;
-            top: 20px;
-            font-size: 2rem;
-            text-shadow: 2px 2px 4px black;
-        }
-        #scoreBoard { left: 20px; }
-        #timer { right: 20px; }
-        #endScreen {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 2rem;
-            text-align: center;
-            display: none;
-            z-index: 9999;
-        }
-        #resetButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #ff6347;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        #startButton {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #4CAF50;
-            padding: 20px 40px;
-            font-size: 1.5rem;
-            color: white;
-            border: none;
-            cursor: pointer;
-            z-index: 9999;
-        }
-        #gameTitle {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 5rem;
-            text-align: center;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            color: red;
-            text-shadow: 2px 2px 4px black;
-        }
-        #subtitle, #description {
-            position: absolute;
-            font-size: 2rem;
-            color: white;
-            text-shadow: 2px 2px 4px black;
-        }
-        #subtitle { bottom: 150px; left: 50%; transform: translateX(-50%); }
-        #description { bottom: 100px; left: 50%; transform: translateX(-50%); }
-        #versionDisplay {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-size: 1rem;
-            color: white;
-            z-index: 9999;
-        }
-        .clickable { position: absolute; cursor: pointer; width: 150px; height: 150px; }
-        #akGuy {
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            z-index: 10000;
-            display: none;
-            background-image: url('https://z7p.se/akguy.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Z7P Aim Trainer</title>
+  <style>
+    /* Global reset and Comic Sans font */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      background: url('https://z7p.se/bliss.png') no-repeat center center;
+      background-size: cover;
+      position: relative;
+      transition: filter 0.5s ease;
+    }
+    /* Blur class for flashbang effect */
+    .blur { filter: blur(5px); }
+    
+    /* Start screen (centered) */
+    #startScreen {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+    #startScreen h1 {
+      font-size: 4rem;
+      color: red;
+      margin-bottom: 20px;
+    }
+    #startScreen p { font-size: 2rem; margin-bottom: 20px; }
+    #startButton {
+      padding: 15px 30px;
+      font-size: 2rem;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    /* UI elements (score & timer) */
+    #scoreBoard, #timer {
+      position: absolute;
+      top: 20px;
+      font-size: 2rem;
+      text-shadow: 2px 2px 4px black;
+      color: white;
+      z-index: 900;
+    }
+    #scoreBoard { left: 20px; }
+    #timer { right: 20px; }
+    /* End screen overlay (centered) */
+    #endScreen {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1100;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+    #endScreen p { font-size: 2.5rem; margin-bottom: 20px; }
+    #resetButton {
+      padding: 10px 20px;
+      font-size: 1.5rem;
+      background-color: #ff6347;
+      border: none;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+    }
+    /* Game container for CT targets */
+    #gameContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 500;
+    }
+    /* Flashbang overlay (white.png) */
+    #flashbangOverlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://z7p.se/white.png') no-repeat center center;
+      background-size: cover;
+      z-index: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease-in-out;
+    }
+    /* AK Guy overlay and elements */
+    #akGuyOverlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://z7p.se/akguy.png') no-repeat center center;
+      background-size: cover;
+      z-index: 1200;
+      display: none;
+    }
+    /* Inverted AK Guy text bubble: white background, black text */
+    #akTextBubble {
+      position: absolute;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: black;
+      font-size: 1.5rem;
+      z-index: 1250;
+      display: none;
+    }
+    /* AK icon (ak.png) */
+    #akIcon {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+      z-index: 1250;
+      display: none;
+    }
+    /* CT targets (all same fixed size) */
+    .ct {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      user-select: none;
+    }
+    /* Explosion animation */
+    .explosion {
+      position: absolute;
+      z-index: 1100;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
-    <div id="gameTitle">z7p Aimtrainer!!!1111!!1!</div>
-    <div id="subtitle">Can you Click Fast Enough?</div>
-    <div id="description">Click the images to explode them and get points! But beware, things get faster!</div>
-    <div id="flashbang"></div>
-    <audio id="backgroundMusic" src="https://z7p.se/music.mp3" loop></audio>
-    <audio id="flashbangSound" src="https://z7p.se/flashbang.mp3"></audio>
-    <audio id="endMusic" src="https://z7p.se/ez4ence_end.mp3"></audio>
-    <audio id="explosionSound" src="https://z7p.se/explosion.mp3"></audio>
-    <audio id="mynameSound" src="https://z7p.se/myname.mp3"></audio>
-    <div id="akGuy"></div>
-    <div id="container"></div>
-    <div id="scoreBoard">Score: 0</div>
-    <div id="timer">Time: 02:34</div>
-    <div id="endScreen">
-        <p>Game Over! Final Score: <span id="finalScore"></span></p>
-        <button id="resetButton">Restart Game</button>
-    </div>
-    <button id="startButton">Start Game</button>
-    <div id="versionDisplay">Version 1.3</div>
+  <!-- Start Screen -->
+  <div id="startScreen">
+    <h1>Z7P aim Trainr!!!1!</h1>
+    <p>you cant win</p>
+    <button id="startButton">Play</button>
+  </div>
 
-    <script>
-        const container = document.getElementById('container');
-        const scoreBoard = document.getElementById('scoreBoard');
-        const timerBoard = document.getElementById('timer');
-        const flashbangElement = document.getElementById('flashbang');
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        const endMusic = document.getElementById('endMusic');
-        const explosionSound = document.getElementById('explosionSound');
-        const flashbangSound = document.getElementById('flashbangSound');
-        const akGuy = document.getElementById('akGuy');
-        const endScreen = document.getElementById('endScreen');
-        const resetButton = document.getElementById('resetButton');
-        const startButton = document.getElementById('startButton');
-        const subtitle = document.getElementById('subtitle');
-        const description = document.getElementById('description');
-        const versionDisplay = document.getElementById('versionDisplay');
+  <!-- UI Elements -->
+  <div id="scoreBoard">Score: 0</div>
+  <div id="timer">Time: 2:30</div>
 
-        let score = 0;
-        let gameRunning = false;
-        let timeLeft = 149;
-        let gameTimer;
-        let flashbangTimer;
-        let countdownTimer;
-        let activeImages = 0;
-        const maxImages = 50;
-        let akGuyTimer;
-        let akGuyActive = false;
+  <!-- Game Container -->
+  <div id="gameContainer"></div>
 
-        function createZ7P() {
-            if (!gameRunning || activeImages >= maxImages) return;
+  <!-- Flashbang Overlay -->
+  <div id="flashbangOverlay"></div>
 
-            const imageType = Math.random() < 0.5 ? 'z7p' : (Math.random() < 0.75 ? 'z7p1' : 'z7p2');
-            const image = document.createElement('img');
-            image.src = `https://z7p.se/${imageType}.png`;
-            image.classList.add('clickable');
-            container.appendChild(image);
+  <!-- AK Guy Elements -->
+  <div id="akGuyOverlay"></div>
+  <div id="akTextBubble">pls giv ak with cool skin</div>
+  <img id="akIcon" src="https://z7p.se/ak.png" />
 
-            let x = Math.random() * (window.innerWidth - 150);
-            let y = Math.random() * (window.innerHeight - 150);
+  <!-- End Screen -->
+  <div id="endScreen">
+    <p>Game Over! Final Score: <span id="finalScore"></span></p>
+    <button id="resetButton">Restart Game</button>
+  </div>
 
-            let dx = Math.random() * 6 + 2;
-            let dy = Math.random() * 6 + 2;
+  <!-- Audio Elements -->
+  <audio id="backgroundMusic" src="https://z7p.se/music.mp3"></audio>
+  <audio id="endMusic" src="https://z7p.se/ez4enceend.mp3"></audio>
+  <audio id="flashbangWarning" src="https://z7p.se/flashbangwarning.mp3"></audio>
+  <audio id="flashbangSound" src="https://z7p.se/flashbang.mp3"></audio>
+  <audio id="explosionSound" src="https://z7p.se/explosion.mp3"></audio>
+  <audio id="mynameSound" src="https://z7p.se/myname.mp3"></audio>
 
-            let points = imageType === 'z7p' ? 1 : imageType === 'z7p1' ? 2 : 3;
+  <script>
+    /***********************
+     * Global Variables
+     ***********************/
+    const GAME_DURATION = 150; // 2 minutes 30 seconds
+    let gameTime = GAME_DURATION;
+    let gameRunning = false;
+    let gameInterval = null;
+    let flashbangTimeout = null;
+    let akGuyTimeout = null;
+    const targets = []; // Each target: { element, x, y, vx, vy, points }
 
-            function moveZ7P() {
-                if (!gameRunning) return;
-                x += dx;
-                y += dy;
+    /***********************
+     * DOM Elements
+     ***********************/
+    const startScreen    = document.getElementById("startScreen");
+    const startButton    = document.getElementById("startButton");
+    const scoreBoard     = document.getElementById("scoreBoard");
+    const timerBoard     = document.getElementById("timer");
+    const gameContainer  = document.getElementById("gameContainer");
+    const endScreen      = document.getElementById("endScreen");
+    const finalScore     = document.getElementById("finalScore");
+    const resetButton    = document.getElementById("resetButton");
+    const flashbangOverlay = document.getElementById("flashbangOverlay");
+    const akGuyOverlay   = document.getElementById("akGuyOverlay");
+    const akTextBubble   = document.getElementById("akTextBubble");
+    const akIcon         = document.getElementById("akIcon");
 
-                if (x <= 0 || x >= window.innerWidth - 150) dx *= -1;
-                if (y <= 0 || y >= window.innerHeight - 150) dy *= -1;
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    const endMusic        = document.getElementById("endMusic");
+    const flashbangWarning = document.getElementById("flashbangWarning");
+    const flashbangSound   = document.getElementById("flashbangSound");
+    const explosionSound   = document.getElementById("explosionSound");
+    const mynameSound      = document.getElementById("mynameSound");
 
-                image.style.left = `${x}px`;
-                image.style.top = `${y}px`;
-
-                requestAnimationFrame(moveZ7P);
-            }
-            moveZ7P();
-
-            image.addEventListener('click', () => explodeImage(image, points));
-            activeImages++;
-
-            setTimeout(() => {
-                if (image.parentNode) {
-                    image.remove();
-                    activeImages--;
-                }
-            }, 5000);
+    /***********************
+     * Utility Functions
+     ***********************/
+    function updateTimer() {
+      let minutes = Math.floor(gameTime / 60);
+      let seconds = gameTime % 60;
+      timerBoard.textContent = `Time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    }
+    function updateScore() {
+      scoreBoard.textContent = `Score: ${score}`;
+    }
+    // Show explosion GIF at given position
+    function showExplosion(left, top) {
+      const exp = document.createElement("img");
+      exp.src = "https://z7p.se/explosion.gif";
+      exp.className = "explosion";
+      exp.style.left = left;
+      exp.style.top = top;
+      gameContainer.appendChild(exp);
+      setTimeout(() => exp.remove(), 500);
+    }
+    // Explode all remaining CT targets
+    function explodeAllTargets() {
+      targets.forEach(tgt => {
+        if (document.body.contains(tgt.element)) {
+          explosionSound.currentTime = 0;
+          explosionSound.play();
+          showExplosion(tgt.element.style.left, tgt.element.style.top);
+          tgt.element.remove();
         }
+      });
+      targets.length = 0;
+    }
 
-        function explodeImage(image, points) {
-            score += points;
-            scoreBoard.textContent = `Score: ${score}`;
-            explosionSound.play();
-            image.remove();
-            activeImages--;
+    /***********************
+     * CT (Target) Functions
+     ***********************/
+    function spawnTarget() {
+      if (!gameRunning) return;
+      // Create a CT element (fixed size, same image)
+      const ct = document.createElement("img");
+      ct.src = "https://z7p.se/ct.png";
+      ct.className = "ct";
+      ct.style.width = "100px";
+      ct.style.height = "100px";
+      // Random starting position
+      let x = Math.random() * (window.innerWidth - 100);
+      let y = Math.random() * (window.innerHeight - 100);
+      ct.style.left = x + "px";
+      ct.style.top = y + "px";
+      // Decide type: 1, 2, or 3 for points and speed
+      let type = Math.floor(Math.random() * 3) + 1; // 1 to 3
+      let points = type;
+      let speed = (type === 1 ? 6 : type === 2 ? 8 : 10); // pixels per frame
+      let angle = Math.random() * 2 * Math.PI;
+      let vx = Math.cos(angle) * speed;
+      let vy = Math.sin(angle) * speed;
+      targets.push({ element: ct, x, y, vx, vy, points });
+      // When interacted with (pointerdown), explode target and add score
+      ct.addEventListener("pointerdown", function() {
+         if (!gameRunning) return;
+         score += points;
+         updateScore();
+         explosionSound.currentTime = 0;
+         explosionSound.play();
+         showExplosion(ct.style.left, ct.style.top);
+         ct.remove();
+      });
+      gameContainer.appendChild(ct);
+    }
+    // Update positions of CT targets using requestAnimationFrame
+    function updateTargets() {
+      if (!gameRunning) return;
+      for (let i = 0; i < targets.length; i++) {
+         const tgt = targets[i];
+         if (!document.body.contains(tgt.element)) continue;
+         tgt.x += tgt.vx;
+         tgt.y += tgt.vy;
+         // Bounce off edges
+         if (tgt.x < 0) { tgt.x = 0; tgt.vx = -tgt.vx; }
+         if (tgt.x > window.innerWidth - 100) { tgt.x = window.innerWidth - 100; tgt.vx = -tgt.vx; }
+         if (tgt.y < 0) { tgt.y = 0; tgt.vy = -tgt.vy; }
+         if (tgt.y > window.innerHeight - 100) { tgt.y = window.innerHeight - 100; tgt.vy = -tgt.vy; }
+         tgt.element.style.left = tgt.x + "px";
+         tgt.element.style.top = tgt.y + "px";
+      }
+      requestAnimationFrame(updateTargets);
+    }
 
-            const explosion = document.createElement('img');
-            explosion.src = 'https://z7p.se/explosion.gif';
-            explosion.style.position = 'absolute';
-            explosion.style.left = image.style.left;
-            explosion.style.top = image.style.top;
-            container.appendChild(explosion);
-            setTimeout(() => explosion.remove(), 500);
-        }
-
-        function triggerFlashbang() {
-            flashbangElement.style.opacity = 1;
+    /***********************
+     * Flashbang Functions
+     ***********************/
+    function scheduleFlashbang() {
+      if (!gameRunning) return;
+      let delay = Math.random() * 5000 + 3000; // 3-8 seconds
+      flashbangTimeout = setTimeout(() => {
+         if (!gameRunning) return;
+         // Play warning sound 1 second before flashbang
+         flashbangWarning.currentTime = 0;
+         flashbangWarning.play();
+         setTimeout(() => {
+            if (!gameRunning) return;
+            // Flashbang: show white overlay and blur entire body
+            flashbangOverlay.style.opacity = 1;
+            flashbangSound.currentTime = 0;
             flashbangSound.play();
-
+            document.body.classList.add("blur");
             setTimeout(() => {
-                flashbangElement.style.opacity = 0;
-                const blurEffect = document.createElement('div');
-                blurEffect.style.position = 'fixed';
-                blurEffect.style.top = '0';
-                blurEffect.style.left = '0';
-                blurEffect.style.width = '100%';
-                blurEffect.style.height = '100%';
-                blurEffect.style.backgroundColor = 'white';
-                blurEffect.style.filter = 'blur(5px)';
-                blurEffect.style.zIndex = 9999;
-                document.body.appendChild(blurEffect);
+              flashbangOverlay.style.opacity = 0;
+              document.body.classList.remove("blur");
+            }, 1500); // 1.5 seconds of blur
+         }, 1000);
+         scheduleFlashbang();
+      }, delay);
+    }
 
-                setTimeout(() => blurEffect.remove(), 1000);
-            }, 500);
-        }
+    /***********************
+     * AK Guy Functions
+     ***********************/
+    function scheduleAKGuy() {
+      if (!gameRunning) return;
+      let delay = Math.random() * 15000 + 15000; // 15-30 seconds
+      akGuyTimeout = setTimeout(() => {
+         if (!gameRunning) return;
+         triggerAKGuy();
+         scheduleAKGuy();
+      }, delay);
+    }
+    function triggerAKGuy() {
+      akGuyOverlay.style.display = "block";
+      akTextBubble.style.display = "block";
+      akIcon.style.display = "block";
+      // Center the text bubble horizontally; place at 60% height
+      akTextBubble.style.left = `${(window.innerWidth - akTextBubble.offsetWidth) / 2}px`;
+      akTextBubble.style.top = `${window.innerHeight * 0.6}px`;
+      mynameSound.currentTime = 0;
+      mynameSound.play();
+      // Move akIcon every 500ms
+      let akMoveInterval = setInterval(() => {
+         akIcon.style.left = `${Math.random() * (window.innerWidth - 150)}px`;
+         akIcon.style.top = `${Math.random() * (window.innerHeight - 150)}px`;
+      }, 500);
+      // Cancel AK Guy if akIcon is interacted with (pointerdown)
+      function cancelAKGuy() {
+         clearInterval(akMoveInterval);
+         hideAKGuy();
+         mynameSound.pause();
+         akIcon.removeEventListener("pointerdown", cancelAKGuy);
+      }
+      akIcon.addEventListener("pointerdown", cancelAKGuy);
+      // Hide AK Guy automatically after 10 seconds
+      setTimeout(() => {
+         clearInterval(akMoveInterval);
+         hideAKGuy();
+         mynameSound.pause();
+      }, 10000);
+    }
+    function hideAKGuy() {
+      akGuyOverlay.style.display = "none";
+      akTextBubble.style.display = "none";
+      akIcon.style.display = "none";
+    }
 
-        function showAkGuy() {
-            if (akGuyActive || !gameRunning) return;
+    /***********************
+     * Game Control Functions
+     ***********************/
+    function startGame() {
+      gameRunning = true;
+      gameTime = GAME_DURATION;
+      score = 0;
+      updateScore();
+      updateTimer();
+      startScreen.style.display = "none";
+      endScreen.style.display = "none";
+      backgroundMusic.currentTime = 0;
+      backgroundMusic.play();
+      gameInterval = setInterval(() => {
+         gameTime--;
+         updateTimer();
+         // When 2 seconds remain, explode all targets and stop spawning new ones
+         if (gameTime === 2) {
+            explodeAllTargets();
+            clearInterval(targetSpawnInterval);
+         }
+         if (gameTime <= 0) endGame();
+      }, 1000);
+      targetSpawnInterval = setInterval(spawnTarget, 1000);
+      requestAnimationFrame(updateTargets);
+      scheduleFlashbang();
+      scheduleAKGuy();
+    }
+    function endGame() {
+      gameRunning = false;
+      clearInterval(gameInterval);
+      clearInterval(targetSpawnInterval);
+      clearTimeout(flashbangTimeout);
+      clearTimeout(akGuyTimeout);
+      backgroundMusic.pause();
+      endMusic.currentTime = 0;
+      endMusic.play();
+      flashbangOverlay.style.opacity = 0;
+      document.body.classList.remove("blur");
+      hideAKGuy();
+      targets.forEach(t => {
+         if (document.body.contains(t.element)) t.element.remove();
+      });
+      targets.length = 0;
+      finalScore.textContent = score;
+      endScreen.style.display = "flex";
+    }
 
-            akGuyActive = true;
-            akGuy.style.display = 'block';
-            mynameSound.play();
-
-            setTimeout(() => {
-                akGuy.style.display = 'none';
-                akGuyActive = false;
-            }, 10000);
-        }
-
-        function startGame() {
-            gameRunning = true;
-            startButton.style.display = "none";
-            backgroundMusic.play();
-            subtitle.style.display = "none";
-            description.style.display = "none";
-            timerBoard.style.display = "block";
-            gameTimer = setInterval(() => {
-                if (timeLeft <= 0) {
-                    endGame();
-                } else {
-                    timeLeft--;
-                    timerBoard.textContent = `Time: ${Math.floor(timeLeft / 60)}:${timeLeft % 60}`;
-                }
-            }, 1000);
-
-            flashbangTimer = setInterval(() => {
-                triggerFlashbang();
-            }, Math.random() * 20000 + 5000);
-
-            setInterval(() => createZ7P(), 500);
-
-            akGuyTimer = setInterval(() => {
-                if (timeLeft > 90) return;
-                showAkGuy();
-            }, 15000);
-        }
-
-        function endGame() {
-            gameRunning = false;
-            backgroundMusic.pause();
-            endMusic.play();
-            endScreen.style.display = "block";
-            document.getElementById('finalScore').textContent = score;
-            clearInterval(gameTimer);
-            clearInterval(flashbangTimer);
-            clearInterval(akGuyTimer);
-
-            const images = document.querySelectorAll('.clickable');
-            images.forEach(image => explodeImage(image, 0));
-        }
-
-        startButton.addEventListener('click', startGame);
-        resetButton.addEventListener('click', () => location.reload());
-    </script>
+    /***********************
+     * Event Listeners
+     ***********************/
+    startButton.addEventListener("click", startGame);
+    resetButton.addEventListener("click", () => location.reload());
+  </script>
 </body>
 </html>
