@@ -1,118 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z7P Float</title>
-    <link rel="icon" type="image/png" href="https://www.z7p.se/favicon.png">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #a9a9a9;
-        }
-        #container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        img {
-            position: absolute;
-            width: 100px;
-            height: auto;
-        }
-        #startButton {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            z-index: 1000;
-        }
-        #startButton:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Z7P Float</title>
+  <link rel="icon" type="image/png" href="https://www.z7p.se/favicon.png" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background-color: #282828;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden; /* Prevent scrolling */
+    }
+    #header {
+      background-color: #222;
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+    #header h1 {
+      margin: 0;
+    }
+    /* The container covers the remainder of the viewport */
+    #container {
+      flex-grow: 1;
+      position: relative;
+      margin-top: 80px; /* Space for header */
+      overflow: hidden;
+    }
+    /* Button container on the top left */
+    .button-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      z-index: 1000;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    /* Fixed size for all Z7P images */
+    .z7p {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+    }
+    .back-button {
+      display: block;
+      width: 200px;
+      padding: 15px;
+      margin: 10px auto;
+      background-color: #444;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 18px;
+      text-align: center;
+      transition: 0.3s;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .back-button:hover {
+      background-color: #666;
+    }
+  </style>
 </head>
 <body>
-    <!-- Start Button -->
-    <button id="startButton">Start Z7P</button>
+  <!-- Header -->
+  <div id="header">
+    <h1>Z7P Float</h1>
+  </div>
+  <!-- Main Container -->
+  <div id="container"></div>
+  <!-- Button Container (default is manual mode) -->
+  <div class="button-container" id="manualButtons">
+    <!-- Mode toggle button: in manual mode, its text will allow switching to auto -->
+    <button id="modeToggleButton">Switch to Auto Mode</button>
+    <button id="addZ7PButton">Add Z7P</button>
+    <button id="removeZ7PButton">Remove Z7P</button>
+  </div>
+  <!-- In auto mode, show a single button to switch back to manual -->
+  <div class="button-container" id="autoButtons" style="display: none;">
+    <button id="switchToManualButton">Switch to Manual Mode</button>
+  </div>
+  <!-- Back to Home Button -->
+  <a href="index.html" class="back-button">Back to Home Page</a>
+  <script>
+    const container = document.getElementById('container');
+    const modeToggleButton = document.getElementById('modeToggleButton');
+    const addZ7PButton = document.getElementById('addZ7PButton');
+    const removeZ7PButton = document.getElementById('removeZ7PButton');
+    const switchToManualButton = document.getElementById('switchToManualButton');
+    const manualButtons = document.getElementById('manualButtons');
+    const autoButtons = document.getElementById('autoButtons');
 
-    <div id="container"></div>
+    // Default mode is manual
+    let manualMode = true;
+    let z7pArray = [];
+    let z7pInterval = null;
 
-    <script>
-        const container = document.getElementById('container');
-        const startButton = document.getElementById('startButton');
-        
-        let gameStarted = false;
+    // Play VineBoom sound
+    function playVineBoomSound() {
+      const vineBoomSound = new Audio("https://www.z7p.se/vineboom.mp3");
+      vineBoomSound.play().catch(error => console.error("Error playing VineBoom:", error));
+    }
 
-        // Function to create and play a new VineBoom sound effect
-        function playVineBoomSound() {
-            const vineBoomSound = new Audio("https://www.z7p.se/vineboom.mp3");
-            vineBoomSound.play().then(() => {
-                console.log('VineBoom sound played successfully.');
-            }).catch(error => {
-                console.error('Error playing VineBoom sound:', error);
-            });
-        }
+    // Play Explosion sound – uses explosion.ogg for Firefox, explosion.mp3 otherwise
+    function playExplosionSound() {
+      let explosionSound;
+      if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        explosionSound = new Audio("https://www.z7p.se/explosion.ogg");
+      } else {
+        explosionSound = new Audio("https://www.z7p.se/explosion.mp3");
+      }
+      explosionSound.play().catch(error => console.error("Error playing explosion sound:", error));
+    }
 
-        // Function to start the game
-        startButton.addEventListener('click', function() {
-            if (!gameStarted) {
-                console.log('Game Started! Z7P appearing and VineBoom sound playing.');
-                gameStarted = true;
-                startButton.style.display = 'none'; // Hide the button after start
+    // Replace a Z7P element with an explosion GIF at the same location,
+    // then remove the explosion GIF after it plays once.
+    function replaceWithExplosion(z7p) {
+      const explosion = document.createElement('img');
+      explosion.src = 'https://www.z7p.se/explosion.gif';
+      explosion.classList.add('z7p');
+      // Set explosion position to match removed Z7P
+      explosion.style.left = z7p.style.left;
+      explosion.style.top = z7p.style.top;
+      container.appendChild(explosion);
+      // Remove the explosion GIF after 1000ms (adjust as necessary)
+      setTimeout(() => explosion.remove(), 1000);
+      z7p.remove();
+    }
 
-                // Preload and play the VineBoom sound once when the game starts
-                playVineBoomSound();
+    // Create a new Z7P element (for auto mode)
+    function createZ7P() {
+      const z7p = document.createElement('img');
+      z7p.src = 'https://www.z7p.se/z7p.png';
+      z7p.classList.add('z7p');
+      container.appendChild(z7p);
+      playVineBoomSound();
 
-                // Start the Z7P animation
-                setInterval(createZ7P, 50);
-            }
+      // Use container dimensions as boundaries
+      const maxX = container.clientWidth - 64;
+      const maxY = container.clientHeight - 64;
+      let x = Math.random() * maxX;
+      let y = Math.random() * maxY;
+      z7p.style.left = x + "px";
+      z7p.style.top = y + "px";
+
+      z7pArray.push(z7p);
+      let dx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
+      let dy = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
+      function moveZ7P() {
+        const maxX = container.clientWidth - 64;
+        const maxY = container.clientHeight - 64;
+        x += dx;
+        y += dy;
+        if (x <= 0 || x >= maxX) dx *= -1;
+        if (y <= 0 || y >= maxY) dy *= -1;
+        z7p.style.left = x + "px";
+        z7p.style.top = y + "px";
+        requestAnimationFrame(moveZ7P);
+      }
+      moveZ7P();
+    }
+
+    // Manual Mode: Add Z7P via button click
+    addZ7PButton.addEventListener('click', function() {
+      const z7p = document.createElement('img');
+      z7p.src = 'https://www.z7p.se/z7p.png';
+      z7p.classList.add('z7p');
+      container.appendChild(z7p);
+      playVineBoomSound();
+      const maxX = container.clientWidth - 64;
+      const maxY = container.clientHeight - 64;
+      let x = Math.random() * maxX;
+      let y = Math.random() * maxY;
+      z7p.style.left = x + "px";
+      z7p.style.top = y + "px";
+      z7pArray.push(z7p);
+      let dx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
+      let dy = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
+      function moveZ7P() {
+        const maxX = container.clientWidth - 64;
+        const maxY = container.clientHeight - 64;
+        x += dx;
+        y += dy;
+        if (x <= 0 || x >= maxX) dx *= -1;
+        if (y <= 0 || y >= maxY) dy *= -1;
+        z7p.style.left = x + "px";
+        z7p.style.top = y + "px";
+        requestAnimationFrame(moveZ7P);
+      }
+      moveZ7P();
+    });
+
+    // Manual Mode: Remove Z7P via button click
+    removeZ7PButton.addEventListener('click', function() {
+      if (z7pArray.length > 0) {
+        const z7p = z7pArray.pop();
+        playExplosionSound();
+        replaceWithExplosion(z7p);
+      }
+    });
+
+    // Start Auto Mode: begin auto-spawning Z7Ps
+    function startAutoMode() {
+      z7pInterval = setInterval(createZ7P, 50);
+      manualButtons.style.display = 'none';
+      autoButtons.style.display = 'flex';
+    }
+
+    // Stop Auto Mode: clear interval and remove all Z7Ps (with explosion effect)
+    function stopAutoMode() {
+      clearInterval(z7pInterval);
+      autoButtons.style.display = 'none';
+      manualButtons.style.display = 'flex';
+      z7pArray.forEach(z7p => {
+        playExplosionSound();
+        replaceWithExplosion(z7p);
+      });
+      z7pArray = [];
+    }
+
+    // Mode toggle button – default is manual mode.
+    modeToggleButton.addEventListener('click', function() {
+      if (manualMode) {
+        // Switch from manual to auto mode
+        manualMode = false;
+        modeToggleButton.textContent = 'Switch to Manual Mode';
+        // Remove any existing Z7Ps with explosion effect
+        z7pArray.forEach(z7p => {
+          playExplosionSound();
+          replaceWithExplosion(z7p);
         });
+        z7pArray = [];
+        startAutoMode();
+      } else {
+        // Switch from auto to manual mode
+        manualMode = true;
+        modeToggleButton.textContent = 'Switch to Auto Mode';
+        stopAutoMode();
+      }
+    });
 
-        // Function to create Z7P elements
-        function createZ7P() {
-            console.log("Adding a new Z7P...");
-
-            const z7p = document.createElement('img');
-            z7p.src = 'https://www.z7p.se/z7p.png'; // Ensure this is the correct path to your image
-            z7p.style.width = "100px";
-            z7p.style.height = "auto";
-            z7p.style.position = "absolute";
-            container.appendChild(z7p);
-
-            // Play VineBoom sound whenever a new Z7P appears
-            playVineBoomSound();
-
-            let x = Math.random() * (window.innerWidth - 100);
-            let y = Math.random() * (window.innerHeight - 100);
-            let dx = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
-            let dy = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 1);
-
-            function moveZ7P() {
-                const maxX = window.innerWidth - 100;
-                const maxY = window.innerHeight - 100;
-
-                x += dx;
-                y += dy;
-
-                if (x <= 0 || x >= maxX) dx *= -1;
-                if (y <= 0 || y >= maxY) dy *= -1;
-
-                z7p.style.left = `${x}px`;
-                z7p.style.top = `${y}px`;
-
-                requestAnimationFrame(moveZ7P);
-            }
-            moveZ7P();
-        }
-    </script>
+    // Allow switching back using the auto button (if visible)
+    switchToManualButton.addEventListener('click', function() {
+      manualMode = true;
+      modeToggleButton.textContent = 'Switch to Auto Mode';
+      stopAutoMode();
+    });
+    // Do not start auto mode on page load – default is manual mode.
+  </script>
 </body>
 </html>
