@@ -134,7 +134,6 @@
       let explosionSound;
       if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         explosionSound = new Audio("https://www.z7p.se/media/explosion.ogg");
-      }
       explosionSound.play().catch(error => console.error("Error playing explosion sound:", error));
     }
 
