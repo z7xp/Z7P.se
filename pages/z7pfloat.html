@@ -108,7 +108,7 @@
     <button id="switchToManualButton">Switch to Manual Mode</button>
   </div>
   <!-- Back to Home Button -->
-  <a href="index.html" class="back-button">Back to Home Page</a>
+  <a href="z7p.se/index.html" class="back-button">Back to Home Page</a>
   <script>
     const container = document.getElementById('container');
     const modeToggleButton = document.getElementById('modeToggleButton');
@@ -125,7 +125,7 @@
 
     // Play VineBoom sound
     function playVineBoomSound() {
-      const vineBoomSound = new Audio("https://www.z7p.se/media/vineboom.mp3");
+      const vineBoomSound = new Audio("https://www./media/vineboom.mp3");
       vineBoomSound.play().catch(error => console.error("Error playing VineBoom:", error));
     }
 
@@ -133,9 +133,9 @@
     function playExplosionSound() {
       let explosionSound;
       if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        explosionSound = new Audio("https://www.z7p.se/media/explosion.ogg");
+        explosionSound = new Audio("https://www./media/explosion.ogg");
       } else {
-        explosionSound = new Audio("https://www.z7p.se/media/explosion.mp3");
+        explosionSound = new Audio("https://www./media/explosion.mp3");
       }
       explosionSound.play().catch(error => console.error("Error playing explosion sound:", error));
     }
@@ -144,7 +144,7 @@
     // then remove the explosion GIF after it plays once.
     function replaceWithExplosion(z7p) {
       const explosion = document.createElement('img');
-      explosion.src = 'https://www.z7p.se/media/explosion.gif';
+      explosion.src = 'https://www./media/explosion.gif';
       explosion.classList.add('z7p');
       // Set explosion position to match removed Z7P
       explosion.style.left = z7p.style.left;
@@ -158,7 +158,7 @@
     // Create a new Z7P element (for auto mode)
     function createZ7P() {
       const z7p = document.createElement('img');
-      z7p.src = 'https://www.z7p.se/media/z7p.png';
+      z7p.src = 'https://www./media/z7p.png';
       z7p.classList.add('z7p');
       container.appendChild(z7p);
       playVineBoomSound();
@@ -191,7 +191,7 @@
     // Manual Mode: Add Z7P via button click
     addZ7PButton.addEventListener('click', function() {
       const z7p = document.createElement('img');
-      z7p.src = 'https://www.z7p.se/media/z7p.png';
+      z7p.src = 'https://www./media/z7p.png';
       z7p.classList.add('z7p');
       container.appendChild(z7p);
       playVineBoomSound();
