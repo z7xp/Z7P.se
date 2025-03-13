@@ -131,8 +131,7 @@
 
     // Play Explosion sound – uses explosion.ogg for Firefox, explosion.mp3 otherwise
     function playExplosionSound() {
-      let explosionSound;
-        explosionSound = new Audio("https://www.z7p.se/media/explosion.ogg");
+        const explosionSound = new Audio("https://www.z7p.se/media/explosion.ogg");
       explosionSound.play().catch(error => console.error("Error playing explosion sound:", error));
     }
 
