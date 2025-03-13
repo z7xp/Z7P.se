@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Age Calculator - Z7P.SE</title>
     <link rel="icon" type="image/png" href="https://www.z7p.se/media/favicon.png">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body, html {
             margin: 0;
@@ -16,13 +15,16 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            justify-content: space-between;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center;
         }
 
         /* Fixed Header */
         #header {
             background-color: #222;
             padding: 20px;
+            width: 100%;
             text-align: center;
             position: fixed;
             top: 0;
@@ -35,23 +37,48 @@
             margin: 0;
         }
 
-        /* Main content container */
-        #container {
-            margin-top: 80px; /* Space for header */
-            padding: 20px;
-            background-color: #333; /* Dark background to match the theme */
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
+        /* Calculator section */
+        .calculator {
+            background-color: #333;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
         }
 
+        input[type="number"] {
+            padding: 10px;
+            width: 80%;
+            margin: 20px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            background-color: #444;
+            color: white;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #666;
+        }
+
+        /* Loading and result display */
         #loading {
-            display: none;
             font-size: 20px;
             font-weight: bold;
             color: #ff4500;
+            display: none;
         }
 
         #result {
@@ -59,22 +86,6 @@
             font-size: 22px;
             font-weight: bold;
             margin-top: 20px;
-        }
-
-        canvas {
-            margin-top: 20px;
-        }
-
-        /* Footer */
-        #footer {
-            background-color: #222;
-            color: #aaa;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
         }
 
         /* Back to Home Button */
@@ -103,22 +114,18 @@
         <h1>Age Calculator</h1>
     </div>
 
-    <!-- Main Content -->
-    <div id="container">
+    <!-- Calculator -->
+    <div class="calculator">
         <h2>Enter Your Age</h2>
         <input type="number" id="ageInput" placeholder="Your Age" />
         <button onclick="calculateAge()">Calculate</button>
 
-        <div id="loading">Calculating age...</div>
+        <div id="loading"></div>
         <div id="result"></div>
-        
-        <canvas id="ageChart" width="200" height="200"></canvas>
     </div>
 
     <!-- Back to Home Button -->
     <a href="index.html" class="back-button">Back to Home Page</a>
-    
-    </div>
 
     <script>
         function calculateAge() {
@@ -134,28 +141,20 @@
             loadingDiv.style.display = "block";
             resultDiv.style.display = "none";
 
+            // Animating the calculating text
+            let dots = 0;
+            const calculatingText = "Calculating";
+            const interval = setInterval(() => {
+                dots = (dots + 1) % 4; // Cycle through 1, 2, 3 dots
+                loadingDiv.innerHTML = calculatingText + '.'.repeat(dots);
+            }, 500);
+
             setTimeout(() => {
+                clearInterval(interval); // Stop the animation
                 loadingDiv.style.display = "none";
                 resultDiv.innerHTML = `Your calculated age is <b>${age}</b>, Congrats!`;
                 resultDiv.style.display = "block";
-                generateChart(age);
-            }, 2000);
-        }
-
-        function generateChart(age) {
-            const ctx = document.getElementById("ageChart").getContext("2d");
-            
-            new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: ["Your Age", "Average Human Age", "Max Recorded Age"],
-                    datasets: [{
-                        label: "Age Comparison",
-                        data: [age, 40, 122],
-                        backgroundColor: ["blue", "gray", "red"]
-                    }]
-                }
-            });
+            }, 2000); // Wait for 2 seconds before showing the result
         }
     </script>
 
