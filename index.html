@@ -6,35 +6,67 @@
     <title>Welcome to Z7P.SE</title>
     <link rel="icon" type="image/png" href="https://www.z7p.se/favicon.png">
     <style>
-        body {
+        body, html {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #222;
+            background-color: #282828;
             color: white;
             margin: 0;
             padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        h1 {
-            margin-top: 50px;
+
+        #header {
+            background-color: #222;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
         }
+
+        #header h1 {
+            margin: 0;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin-top: 80px; /* To prevent overlap with header */
+        }
+
         .container {
             margin-top: 30px;
         }
+
         .btn {
             display: block;
             width: 200px;
             padding: 15px;
             margin: 10px auto;
-            background-color: #ff4500;
+            background-color: #444;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             font-size: 18px;
+            text-align: center;
             transition: 0.3s;
         }
+
         .btn:hover {
-            background-color: #e63900;
+            background-color: #666;
         }
+
         footer {
             margin-top: 50px;
             font-size: 14px;
@@ -44,19 +76,24 @@
 </head>
 <body>
 
-    <h1>Welcome to Z7P.SE</h1>
-    <p>Select a page to continue:</p>
-
-    <div class="container">
-	<a href="mcserver.html" class="btn">MCz7p</a>
-        <a href="aimtrainer.html" class="btn">AimTrainr</a>
-        <a href="age-calculator.html" class="btn">Age calculator</a>
-        <a href="z7pfloat.html" class="btn">Z7PFloat</a>
-        <a href="about.html" class="btn">About This Website</a>
-        <a href="contact.html" class="btn">Contact</a>
-        <!-- Added Button to mcserver.html -->
+    <div id="header">
+        <h1>Welcome to Z7P.SE</h1>
     </div>
 
+    <div class="main-content">
+        <p>Select a page to continue:</p>
+
+        <div class="container">
+            <a href="mcserver.html" class="btn">Minecraft Server</a>
+            <a href="aimtrainer.html" class="btn">AimTrainer</a>
+            <a href="age-calculator.html" class="btn">Age Calculator</a>
+            <a href="z7pfloat.html" class="btn">Z7PFloat</a>
+            <a href="rainchecker.html" class="btn">Rain Checker</a>
+            <a href="about.html" class="btn">About This Website</a>
+            <a href="contact.html" class="btn">Contact</a>
+        </div>
+    </div>
+    </footer>
 
 </body>
 </html>
