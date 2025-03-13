@@ -8,8 +8,8 @@
     <style>
         body, html {
             font-family: Arial, sans-serif;
-            background-color: #282828;
-            color: white;
+            background-color: #212227; /* Updated color */
+            color: #f9d7d7; /* Updated color */
             margin: 0;
             padding: 0;
             height: 100%;
@@ -20,7 +20,7 @@
         }
 
         #header {
-            background-color: #222;
+            background-color: #1a1920; /* Updated color */
             padding: 20px;
             width: 100%;
             text-align: center;
@@ -62,7 +62,7 @@
             left: 50%;
             transform: translateX(-50%);
             background-color: #444;
-            color: white;
+            color: #f9d7d7;
             padding: 15px 30px;
             text-decoration: none;
             font-size: 18px;
@@ -76,7 +76,7 @@
 
         button {
             background-color: #444;
-            color: white;
+            color: #db3b00;
             border: none;
             padding: 10px 20px;
             font-size: 1.2rem;
@@ -87,6 +87,27 @@
         button:hover {
             background-color: #666;
         }
+
+        /* Discord Button Styling */
+        .discord-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7289da; /* Discord's main color */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            z-index: 20; /* Ensuring the button is above other content */
+            transition: background-color 0.3s;
+        }
+
+        .discord-button:hover {
+            background-color: #5b6eae; /* Darker blue for hover effect */
+        }
+
     </style>
 </head>
 <body>
@@ -94,6 +115,9 @@
     <div id="header">
         <h1>Is It Raining?</h1>
     </div>
+
+    <!-- Discord Button -->
+    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
 
     <div class="main-content">
         <div class="button-container">
@@ -118,7 +142,7 @@
                 resultElement.textContent = text + '.'.repeat(dots);
             }, 500); // Update every 500ms
 
-            // After 20 seconds, stop the animation and display "Check outside."
+            // After 20 seconds, stop the animation and display "Check outside"
             setTimeout(() => {
                 clearInterval(interval); // Stop the interval
                 resultElement.textContent = "Check outside."; // Final message

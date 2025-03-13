@@ -9,8 +9,8 @@
     body, html {
       margin: 0;
       padding: 0;
-      background-color: #282828;
-      color: white;
+      background-color: #212227;
+      color: #f9d7d7;
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
@@ -18,7 +18,7 @@
       overflow: hidden; /* Prevent scrolling */
     }
     #header {
-      background-color: #222;
+      background-color: #1a1920;
       padding: 20px;
       width: 100%;
       text-align: center;
@@ -51,14 +51,14 @@
     button {
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #4caf50;
-      color: white;
+      background-color: #038e41;
+      color: #f9d7d7;
       border: none;
       cursor: pointer;
       transition: background-color 0.3s;
     }
     button:hover {
-      background-color: #45a049;
+      background-color: #db3b00;
     }
     /* Fixed size for all Z7P images */
     .z7p {
@@ -72,8 +72,8 @@
       width: 200px;
       padding: 15px;
       margin: 10px auto;
-      background-color: #444;
-      color: white;
+      background-color: #3a3d43;
+      color: #f9d7d7;
       text-decoration: none;
       border-radius: 5px;
       font-size: 18px;
@@ -85,7 +85,26 @@
       transform: translateX(-50%);
     }
     .back-button:hover {
-      background-color: #666;
+      background-color: #5b6565;
+    }
+    /* Discord Button Styling */
+    .discord-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #7289da; /* Discord's main color */
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      text-decoration: none;
+      text-align: center;
+      z-index: 20; /* Ensuring the button is above other content */
+      transition: background-color 0.3s;
+    }
+
+    .discord-button:hover {
+      background-color: #5b6eae; /* Darker blue for hover effect */
     }
   </style>
 </head>
@@ -94,6 +113,8 @@
   <div id="header">
     <h1>Z7P Float</h1>
   </div>
+  <!-- Discord Button -->
+  <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
   <!-- Main Container -->
   <div id="container"></div>
   <!-- Button Container (default is manual mode) -->
@@ -129,7 +150,6 @@
       vineBoomSound.play().catch(error => console.error("Error playing VineBoom:", error));
     }
 
-    // Play Explosion sound – uses explosion.ogg for Firefox, explosion.mp3 otherwise
     function playExplosionSound() {
         const explosionSound = new Audio("https://www.z7p.se/media/explosion.ogg");
       explosionSound.play().catch(error => console.error("Error playing explosion sound:", error));

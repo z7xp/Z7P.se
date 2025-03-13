@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Z7P.SE</title>
+    <title>About - Z7p.se</title>
     <link rel="icon" type="image/png" href="https://www.z7p.se/media/favicon.png">
     <style>
         body, html {
             font-family: Arial, sans-serif;
-            background-color: #282828;
-            color: white;
+            background-color: #212227; /* Updated color */
+            color: #f9d7d7; /* Updated color */
             margin: 0;
             padding: 0;
             height: 100%;
@@ -19,7 +19,7 @@
         }
 
         #header {
-            background-color: #222;
+            background-color: #1a1920; /* Updated color */
             padding: 20px;
             width: 100%;
             text-align: center;
@@ -44,18 +44,25 @@
             padding-bottom: 100px; /* To add some space at the bottom for the button */
         }
 
-        .content p {
+        .email {
             font-size: 20px;
             font-weight: bold;
             color: #ff4500;
-            text-align: center;
+        }
+
+        a {
+            color: #ff4500;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         footer {
             margin-top: 50px;
             font-size: 14px;
             opacity: 0.6;
-            text-align: center;
         }
 
         /* Button Styling */
@@ -64,8 +71,8 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #444;
-            color: white;
+            background-color: #3a3d43;
+            color: #f9d7d7;
             padding: 15px 30px;
             text-decoration: none;
             font-size: 18px;
@@ -74,23 +81,46 @@
         }
 
         .back-button:hover {
-            background-color: #666;
+            background-color: #5b6565;
         }
 
+        /* Discord Button Styling */
+        .discord-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7289da; /* Discord's main color */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            z-index: 20; /* Ensuring the button is above other content */
+            transition: background-color 0.3s;
+        }
+
+        .discord-button:hover {
+            background-color: #5b6eae; /* Darker blue for hover effect */
+        }
     </style>
 </head>
 <body>
 
     <div id="header">
-        <h1>About - Z7P.SE</h1>
+        <h1>About page</h1>
     </div>
 
+    <!-- Discord Button -->
+    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
+
     <div class="main-content">
-        <p>welcome to z7p.se!@!1 i ask chatgtp make me bad websites!!!11!</p>
+        <p>i ask chatgtp to maek me bad website!!!1!@</p>
+
     </div>
 
     <!-- Back to Home Page Button -->
-    <a href="../index.html" class="back-button">Back to Home Page</a>
+    <a href="/index.html" class="back-button">Back to Home Page</a>
 
 </body>
 </html>

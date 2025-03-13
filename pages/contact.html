@@ -8,8 +8,8 @@
     <style>
         body, html {
             font-family: Arial, sans-serif;
-            background-color: #282828;
-            color: white;
+            background-color: #212227; /* Updated color */
+            color: #f9d7d7; /* Updated color */
             margin: 0;
             padding: 0;
             height: 100%;
@@ -19,7 +19,7 @@
         }
 
         #header {
-            background-color: #222;
+            background-color: #1a1920; /* Updated color */
             padding: 20px;
             width: 100%;
             text-align: center;
@@ -71,8 +71,8 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #444;
-            color: white;
+            background-color: #3a3d43;
+            color: #f9d7d7;
             padding: 15px 30px;
             text-decoration: none;
             font-size: 18px;
@@ -81,7 +81,27 @@
         }
 
         .back-button:hover {
-            background-color: #666;
+            background-color: #5b6565;
+        }
+
+        /* Discord Button Styling */
+        .discord-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7289da; /* Discord's main color */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            z-index: 20; /* Ensuring the button is above other content */
+            transition: background-color 0.3s;
+        }
+
+        .discord-button:hover {
+            background-color: #5b6eae; /* Darker blue for hover effect */
         }
 
     </style>
@@ -91,6 +111,9 @@
     <div id="header">
         <h1>Contact - Z7P.SE</h1>
     </div>
+
+    <!-- Discord Button -->
+    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
 
     <div class="main-content">
         <p>why are you here?</p>

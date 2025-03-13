@@ -8,8 +8,8 @@
     <style>
         body, html {
             font-family: Arial, sans-serif;
-            background-color: #282828;
-            color: white;
+            background-color: #212227; /* Updated color */
+            color: #f9d7d7; /* Updated color */
             margin: 0;
             padding: 0;
             height: 100%;
@@ -19,7 +19,7 @@
         }
 
         #header {
-            background-color: #222;
+            background-color: #1a1920; /* Updated color */
             padding: 20px;
             width: 100%;
             text-align: center;
@@ -45,7 +45,7 @@
         }
 
         .calculator {
-            background-color: #333;
+            background-color: #1a1920;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -61,14 +61,25 @@
             border: none;
             border-radius: 5px;
             font-size: 18px;
-            background-color: #444;
-            color: white;
+            background-color: #3a3d43;
+            color: #f9d7d7;
+        }
+
+        /* Remove number input arrows */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield; /* For Firefox */
         }
 
         button {
             padding: 10px 20px;
-            background-color: #444;
-            color: white;
+            background-color: #3a3d43;
+            color: #db3b00;
             border: none;
             border-radius: 5px;
             font-size: 18px;
@@ -100,8 +111,8 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #444;
-            color: white;
+            background-color: #3a3d43;
+            color: #f9d7d7;
             text-decoration: none;
             padding: 15px 30px;
             border-radius: 5px;
@@ -109,7 +120,27 @@
         }
 
         .back-button:hover {
-            background-color: #666;
+            background-color: #5b6565;
+        }
+
+        /* Discord Button Styling */
+        .discord-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7289da; /* Discord's main color */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            z-index: 20; /* Ensuring the button is above other content */
+            transition: background-color 0.3s;
+        }
+
+        .discord-button:hover {
+            background-color: #5b6eae; /* Darker blue for hover effect */
         }
 
     </style>
@@ -120,6 +151,9 @@
     <div id="header">
         <h1>Age Calculator</h1>
     </div>
+
+    <!-- Discord Button -->
+    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -163,7 +197,7 @@
                 loadingDiv.style.display = "none";
                 resultDiv.innerHTML = `Your calculated age is <b>${age}</b>, Congrats!`;
                 resultDiv.style.display = "block";
-            }, 2000); // Wait for 2 seconds before showing the result
+            }, 5000); // Wait for 2 seconds before showing the result
         }
     </script>
 
