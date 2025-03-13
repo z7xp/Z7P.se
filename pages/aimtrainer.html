@@ -11,7 +11,7 @@
       font-family: "Comic Sans MS", cursive, sans-serif;
       overflow: hidden;
       height: 100vh;
-      background: url('https://z7p.se/bliss.png') no-repeat center center;
+      background: url('https://z7p.se/media/bliss.png') no-repeat center center;
       background-size: cover;
       position: relative;
       transition: filter 0.5s ease;
@@ -94,7 +94,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: url('https://z7p.se/white.png') no-repeat center center;
+      background: url('https://z7p.se/media/white.png') no-repeat center center;
       background-size: cover;
       z-index: 800;
       opacity: 0;
@@ -106,7 +106,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: url('https://z7p.se/akguy.png') no-repeat center center;
+      background: url('https://z7p.se/media/akguy.png') no-repeat center center;
       background-size: cover;
       z-index: 1200;
       display: none;
@@ -168,7 +168,7 @@
   <!-- AK Guy Elements -->
   <div id="akGuyOverlay"></div>
   <div id="akTextBubble">pls giv ak with cool skin</div>
-  <img id="akIcon" src="https://z7p.se/ak.png" />
+  <img id="akIcon" src="https://z7p.se/media/ak.png" />
 
   <!-- End Screen -->
   <div id="endScreen">
@@ -177,12 +177,13 @@
   </div>
 
   <!-- Audio Elements -->
-  <audio id="backgroundMusic" src="https://z7p.se/music.mp3"></audio>
-  <audio id="endMusic" src="https://z7p.se/ez4enceend.mp3"></audio>
-  <audio id="flashbangWarning" src="https://z7p.se/flashbangwarning.mp3"></audio>
-  <audio id="flashbangSound" src="https://z7p.se/flashbang.mp3"></audio>
-  <audio id="explosionSound" src="https://z7p.se/explosion.mp3"></audio>
-  <audio id="mynameSound" src="https://z7p.se/myname.mp3"></audio>
+
+  <audio id="backgroundMusic" src="https://z7p.se/media/music.ogg"></audio>
+  <audio id="endMusic" src="https://z7p.se/media/ez4enceend.mp3"></audio>
+  <audio id="flashbangWarning" src="https://z7p.se/media/flashbangwarning.mp3"></audio>
+  <audio id="flashbangSound" src="https://z7p.se/media/flashbang.mp3"></audio>
+  <audio id="explosionSound" src="https://z7p.se/media/explosion.mp3"></audio>
+  <audio id="mynameSound" src="https://z7p.se/media/myname.mp3"></audio>
 
   <script>
     /***********************
@@ -233,7 +234,7 @@
     // Show explosion GIF at given position
     function showExplosion(left, top) {
       const exp = document.createElement("img");
-      exp.src = "https://z7p.se/explosion.gif";
+      exp.src = "https://z7p.se/media/explosion.gif";
       exp.className = "explosion";
       exp.style.left = left;
       exp.style.top = top;
@@ -260,7 +261,7 @@
       if (!gameRunning) return;
       // Create a CT element (fixed size, same image)
       const ct = document.createElement("img");
-      ct.src = "https://z7p.se/ct.png";
+      ct.src = "https://z7p.se/media/ct.png";
       ct.className = "ct";
       ct.style.width = "100px";
       ct.style.height = "100px";
