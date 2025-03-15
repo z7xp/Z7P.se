@@ -71,13 +71,56 @@
         .change-message:hover {
             background-color: #5b6565;
         }
+
+        /* Discord Button Style */
+        .discord-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7289da; /* Discord's main color */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            z-index: 20; /* Ensuring the button is above other content */
+            transition: background-color 0.3s;
+        }
+
+        .discord-button:hover {
+            background-color: #5b6eae; /* Darker blue for hover effect */
+        }
+
+        /* Back to Home Button */
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3a3d43;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #5b6565;
+        }
+
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div id="header">
         <h1>Emotional Support Potato</h1>
     </div>
 
+    <!-- Discord Button -->
+    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
+  
     <div class="potato-container">
         <img src="https://www.z7p.se/media/potato.png" alt="Potato" class="potato-img" id="potato-img">
         <p class="message" id="potato-message">click to start!</p>
@@ -86,6 +129,9 @@
 
     <audio id="normal-sound" src="https://www.z7p.se/media/nomnomnom.ogg"></audio>
     <audio id="special-sound" src="https://www.z7p.se/media/thunder.ogg"></audio>
+
+    <!-- Back to Home Page Button -->
+    <a href="/index.html" class="back-button">Back to Home Page</a>
 
     <script>
         const messages = [
@@ -98,7 +144,7 @@
             "Even potatoes believe in you!"
         ];
         
-        const specialMessage = "KILL YOURSELF";
+        const specialMessage = "1";
         const potatoImage = document.getElementById("potato-img");
         const normalSound = document.getElementById("normal-sound");
         const specialSound = document.getElementById("special-sound");
