@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS2 Case Simulator</title>
+  <link rel="icon" type="image/png" href="https://www.z7p.se/media/favicon.png">
+  <style>
+    body, html {
+      font-family: Arial, sans-serif;
+      background-color: #212227; /* Updated color */
+      color: #f9d7d7; /* Updated color */
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    #header {
+      background-color: #1a1920; /* Updated color */
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+    #header h1 {
+      margin: 0;
+    }
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      margin-top: 80px; /* To prevent overlap with header */
+      padding-bottom: 100px; /* Space at the bottom */
+    }
+    .result {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .loading-text {
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* Button Styling */
+    .back-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #3a3d43;
+      color: #f9d7d7;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .back-button:hover {
+      background-color: #5b6565;
+    }
+    /* Discord Button Styling */
+    .discord-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #7289da; /* Discord's main color */
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      text-decoration: none;
+      text-align: center;
+      z-index: 20; /* Above other content */
+      transition: background-color 0.3s;
+    }
+    .discord-button:hover {
+      background-color: #5b6eae; /* Darker blue on hover */
+    }
+    /* CS2 Case Button Styling */
+    .open-case-button {
+      background-color: #3a3d43;
+      color: #f9d7d7;
+      padding: 15px 30px;
+      border-radius: 5px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .open-case-button:hover {
+      background-color: #5b6565;
+    }
+    /* Color box styling instead of images */
+    .case-color-box {
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <h1>CS2 Case Simulator</h1>
+  </div>
+
+  <!-- Discord Button -->
+  <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
+
+  <div class="main-content">
+    <style>
+      .center-text {
+        text-align: center;
+        font-size: 18px;
+      }
+    </style>
+
+    <p class="center-text">Click the button below to open a simulated CS2 case and predict your next item<br> (I am not responsible if you do not get what the website predicted, any earnings should be sent to Z7P account :> )</p>
+
+    <button class="open-case-button" onclick="openCase()">Open Case</button>
+    <p class="loading-text" id="loading-text"></p>
+    <p class="result" id="case-result"></p>
+    <div id="case-color-box" class="case-color-box"></div> <!-- This will represent the color boxes -->
+  </div>
+
+  <!-- Back to Home Page Button -->
+  <a href="/index.html" class="back-button">Back to Home Page</a>
+
+  <script>
+    // Global variables to manage intervals/timeouts across multiple runs
+    let loadingInterval;
+    let previewInterval;
+    let finalTimeout;
+
+    function openCase() {
+      // Hide previous results when reopening a case
+      document.getElementById("case-result").textContent = "";
+      document.getElementById("case-color-box").style.backgroundColor = ""; // Reset color box
+      
+      // Clear any existing intervals or timeouts from a previous run
+      if (loadingInterval) clearInterval(loadingInterval);
+      if (previewInterval) clearInterval(previewInterval);
+      if (finalTimeout) clearTimeout(finalTimeout);
+
+      // Define possible items (with colors and odds)
+      const odds = [
+        { item: "Mil-Spec (Blue)", probability: 79.92, color: "#4e73df" },  // Blue
+        { item: "Restricted (Purple)", probability: 15.98, color: "#9b59b6" },  // Purple
+        { item: "Classified (Pink)", probability: 3.2, color: "#e91e63" },  // Pink
+        { item: "Covert (Red)", probability: 0.64, color: "#f44336" },  // Red
+        { item: "GOLD GOLD GOLD", probability: 0.25, color: "#ffd700" },  // Gold
+        { item: "0.01% Potato", probability: 0.01, color: "#8b4513" }  // Brown
+      ];
+
+      // Start the loading animation text
+      let loadingText = document.getElementById("loading-text");
+      loadingText.textContent = "loading.";
+      let dotCount = 1;
+      loadingInterval = setInterval(() => {
+        dotCount = (dotCount % 3) + 1;
+        loadingText.textContent = "loading".padEnd(7 + dotCount, ".");
+      }, 500);
+
+      // Start cycling through preview colors of possible items
+      previewInterval = setInterval(() => {
+        let randomIndex = Math.floor(Math.random() * odds.length);
+        document.getElementById("case-color-box").style.backgroundColor = odds[randomIndex].color;
+      }, 200);
+
+      // After 5 seconds, stop the loading and preview animations and show the final result
+      finalTimeout = setTimeout(() => {
+        clearInterval(loadingInterval);
+        clearInterval(previewInterval);
+        loadingText.textContent = "";
+
+        // Determine final result based on odds
+        const random = Math.random() * 100;
+        let cumulativeProbability = 0;
+        let result = "";
+        let finalColor = "";
+
+        for (const caseItem of odds) {
+          cumulativeProbability += caseItem.probability;
+          if (random < cumulativeProbability) {
+            result = caseItem.item;
+            finalColor = caseItem.color;
+            break;
+          }
+        }
+
+        // Display final result and corresponding color
+        document.getElementById("case-result").textContent = `You got: ${result}`;
+        document.getElementById("case-color-box").style.backgroundColor = finalColor;  // Set final color
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
