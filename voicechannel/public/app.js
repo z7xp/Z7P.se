@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Start button not found!');
     }
 
-    // Set up Pusher for real-time updates (optional, if you need Pusher integration)
-    const pusher = new Pusher('your-app-key', {
-        cluster: 'your-cluster',
+    // Set up Pusher for real-time updates (using the provided keys)
+    const pusher = new Pusher('9d493231bf730ee2456d', {
+        cluster: 'mt1',
         encrypted: true
     });
 
