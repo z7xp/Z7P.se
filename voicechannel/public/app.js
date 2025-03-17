@@ -6,32 +6,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if the button exists
     if (startButton) {
         // Add an event listener for the click event
-        startButton.addEventListener('click', function() {
+        startButton.addEventListener('click', async function() {
             console.log("Start Voice button clicked");
 
-            // Send a POST request to the backend to start the voice channel
-            fetch('/startVoice', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ startVoice: true })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Voice started:", data);
-                // Handle the success case, e.g., show a success message or start a WebRTC connection
-                alert('Voice channel started!');
-            })
-            .catch((error) => {
-                console.error('Error:', error); // Log any errors that occur during the fetch request
-                alert('There was an error starting the voice channel.');
-            });
+            // Request microphone access from the user
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                console.log("Microphone access granted");
+                
+                // Send a POST request to the backend to start the voice channel
+                fetch('/startVoice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ startVoice: true })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Voice started:", data);
+                    // Handle the success case, e.g., show a success message or start a WebRTC connection
+                    alert('Voice channel started!');
+                    // You can now use the stream to send audio in a WebRTC connection or process it.
+                })
+                .catch((error) => {
+                    console.error('Error:', error); // Log any errors that occur during the fetch request
+                    alert('There was an error starting the voice channel.');
+                });
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+                alert('Please grant microphone access to use the voice channel.');
+            }
         });
     } else {
         console.error('Start button not found!');
