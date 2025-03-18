@@ -29,6 +29,7 @@ top: 0;
 left: 0;
 z-index: 10;
 top: -100px;
+box-shadow: 0 0 10px #0c1325;
 animation: slideDown 0.8s ease-out forwards;
 }
 
