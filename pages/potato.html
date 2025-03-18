@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -52,14 +51,15 @@
     <audio id="special-sound" src="/media/thunder.ogg"></audio>
     
     <script>
-        const messages = [
-            "You are doing great!",
-            "You're a fantastic human!",
-            "Believe in yourself, you got this!",
-            "The world is lucky to have you!",
-            "You're stronger than you think!",
-            "Stay awesome, stay strong!",
-            "Even potatoes believe in you!"
+        const messages = 
+        [
+        "You are doing great!",
+        "You're a fantastic human!",
+        "Believe in yourself, you got this!",
+        "The world is lucky to have you!",
+        "You're stronger than you think!",
+        "Stay awesome, stay strong!",
+        "Even potatoes believe in you!"
         ];
         
         const specialMessage = "1";
@@ -67,22 +67,30 @@
         const normalSound = document.getElementById("normal-sound");
         const specialSound = document.getElementById("special-sound");
 
-        function changeMessage() {
+        function changeMessage() 
+            {
+            button.disabled = true;
+            setTimeout(() => { button.disabled = false; }, 1000);
+        
             const messageElement = document.getElementById("potato-message");
             const randomChance = Math.random();
 
-            if (randomChance < 0.05) { 
-                messageElement.textContent = specialMessage;
-                potatoImage.src = "/media/thunder.png";
-                specialSound.play();
-                document.body.style.backgroundImage = "url('/media/thunderbackground.png')";
-            } else {
-                const randomIndex = Math.floor(Math.random() * messages.length);
-                messageElement.textContent = messages[randomIndex];
-                potatoImage.src = "/media/potato.png";
-                normalSound.play();
-                document.body.style.backgroundImage = "none";
-                document.body.style.backgroundColor = "#212227";
+            if
+            (randomChance < 0.05) 
+            { 
+            messageElement.textContent = specialMessage;
+            potatoImage.src = "/media/thunder.png";
+            specialSound.play();
+            document.body.style.backgroundImage = "url('/media/thunderbackground.png')";
+            } 
+            else
+            {
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            messageElement.textContent = messages[randomIndex];
+            potatoImage.src = "/media/potato.png";
+            normalSound.play();
+            document.body.style.backgroundImage = "none";
+            document.body.style.backgroundColor = "#212227";
             }
         }
     </script>
