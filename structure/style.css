@@ -91,6 +91,7 @@ justify-content: center;
 }
 
 .backbutton {
+display: inline-block;
 background-color: #3a3d43;
 color: #f9d7d7;
 padding: 15px 30px;
