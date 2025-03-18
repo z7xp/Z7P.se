@@ -1,6 +1,6 @@
 body,
 
-<!--xxxxxxxxxxxxxxxxxxxx Main content xxxxxxxxxxxxxxxxxxxx-->
+/* xxxxxxxxxxxxxxxxxxxx Main content xxxxxxxxxxxxxxxxxxxx */
 
 html
 
@@ -46,7 +46,7 @@ transform: scale(0.8);
 animation: zoomIn 0.8s ease-out forwards;
 }
 
-<!--xxxxxxxxxxxxxxxxxxxx Button xxxxxxxxxxxxxxxxxxxx-->
+/* xxxxxxxxxxxxxxxxxxxx Button xxxxxxxxxxxxxxxxxxxx */
 
 .button
 
@@ -79,7 +79,7 @@ transform: scale(0.9);
 box-shadow: 0 0 15px #0c1325;
 }
 
-<!--xxxxxxxxxxxxxxxxxxxx Back Button xxxxxxxxxxxxxxxxxxxx-->
+/* xxxxxxxxxxxxxxxxxxxx Back Button xxxxxxxxxxxxxxxxxxxx */
 
 .back-button
 
@@ -114,7 +114,7 @@ transform: scale(0.9);
 box-shadow: 0 0 15px #0c1325;
 }
 
-<!--xxxxxxxxxxxxxxxxxxxx Discord Button xxxxxxxxxxxxxxxxxxxx-->
+/* xxxxxxxxxxxxxxxxxxxx Discord Button xxxxxxxxxxxxxxxxxxxx */
 
 .discord-button 
 
@@ -149,7 +149,7 @@ transform: scale(0.9);
 box-shadow: 0 0 15px #0c1325;
 }
 
-<!--xxxxxxxxxxxxxxxxxxxx Animations xxxxxxxxxxxxxxxxxxxx-->
+/* xxxxxxxxxxxxxxxxxxxx Animations xxxxxxxxxxxxxxxxxxxx */
 
 @keyframes slideDown 
 {
@@ -180,7 +180,7 @@ transform: scale(1);
 }
 }
 
-<!--xxxxxxxxxxxxxxxxxxxx Others xxxxxxxxxxxxxxxxxxxx-->
+/* xxxxxxxxxxxxxxxxxxxx Others xxxxxxxxxxxxxxxxxxxx */
 
 .container 
 
