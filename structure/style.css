@@ -51,7 +51,7 @@ body, html {
             opacity: 0.6;
         }
 
-        .back-button {
+        .button {
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -65,7 +65,7 @@ body, html {
             transition: background-color 0.3s;
         }
 
-        .back-button:hover {
+        .button:hover {
             background-color: #5b6565;
         }
 
@@ -87,3 +87,6 @@ body, html {
         .discord-button:hover {
             background-color: #5b6eae; 
 }
+
+
+
