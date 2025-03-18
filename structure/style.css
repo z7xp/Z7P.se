@@ -81,13 +81,16 @@ box-shadow: 0 0 15px #0c1325;
 
 /* xxxxxxxxxxxxxxxxxxxx Back Button xxxxxxxxxxxxxxxxxxxx */
 
-.back-button
-
+.backbutton-container 
 {
 position: fixed;
 bottom: 20px;
-left: 50%;
-transform: translateX(-50%);
+width: 100%;
+display: flex;
+justify-content: center;
+}
+
+.backbutton {
 background-color: #3a3d43;
 color: #f9d7d7;
 padding: 15px 30px;
@@ -99,17 +102,13 @@ transition: transform 0.3s ease-out;
 box-shadow: 0 0 10px #0c1325;
 }
 
-.back-button:hover 
-
-{
+.backbutton:hover {
 background-color: #5b6565;
 transform: scale(1.1);
 box-shadow: 0 0 10px #0c1325;
 }
 
-.back-button:active
-
-{
+.backbutton:active {
 transform: scale(0.9);
 box-shadow: 0 0 15px #0c1325;
 }
