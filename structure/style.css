@@ -110,6 +110,13 @@ transform: scale(1.1);
 box-shadow: 0 0 10px #ff4500;
 }
 
+.button:active 
+{
+transform: scale(0.9);
+box-shadow: 0 0 15px #ff4500;
+}
+
+
 .back-button
 
 {
