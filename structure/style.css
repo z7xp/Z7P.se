@@ -86,7 +86,6 @@ box-shadow: 0 0 15px #0c1325;
 position: fixed;
 bottom: 20px;
 width: 100%;
-display: flex;
 justify-content: center;
 }
 
