@@ -17,6 +17,7 @@ flex-direction: column;
 #header 
 
 {
+box-sizing: border-box;
 background-color: #1a1920;
 padding: 20px;
 width: 100%;
