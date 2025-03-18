@@ -107,13 +107,13 @@ transition: transform 0.3s ease-out;
 {
 background-color: #5b6565;
 transform: scale(1.1);
-box-shadow: 0 0 10px colour:black;
+box-shadow: 0 0 10px color:black;
 }
 
 .button:active 
 {
 transform: scale(0.9);
-box-shadow: 0 0 15px colour:black;
+box-shadow: 0 0 15px color:black;
 }
 
 
