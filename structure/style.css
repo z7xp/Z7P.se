@@ -81,13 +81,18 @@ box-shadow: 0 0 15px #0c1325;
 
 /* xxxxxxxxxxxxxxxxxxxx Back Button xxxxxxxxxxxxxxxxxxxx */
 
-.backbutton 
+.backbutton-container 
 {
 position: fixed;
 bottom: 20px;
 width: 100%;
 display:flex;
 justify-content: center;
+animation: zoomIn 0.8s ease-out forwards;
+}
+
+.backbutton 
+{
 background-color: #3a3d43;
 color: #f9d7d7;
 padding: 15px 30px;
@@ -97,7 +102,6 @@ border-radius: 5px;
 margin: 10px auto;
 transition: transform 0.3s ease-out;
 box-shadow: 0 0 10px #0c1325;
-animation: zoomIn 0.8s ease-out forwards;
 }
 
 .backbutton:hover 
