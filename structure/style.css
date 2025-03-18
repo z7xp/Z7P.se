@@ -167,7 +167,7 @@ text-decoration: none;
 text-align: center;
 z-index: 20; 
 transition: background-color 0.3s;
-animation: slideDown 0.8s ease-out forwards;
+animation: zoomIn 0.8s ease-out forwards;
 }
 
 .discord-button:hover 
