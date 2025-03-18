@@ -14,124 +14,45 @@
     
     <link rel="icon" type="image/png" href="https://www.z7p.se/media/favicon.png">
     
-    <style>
-        
-        body, html {
-            font-family: Arial, sans-serif;
-            background-color: #212227; 
-            color: #db3b00; 
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #header {
-            background-color: #1a1920;
-            padding: 20px;
-            width: 100%;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-        }
-
-        #header h1 {
-            margin: 0;
-            text-align: center;
-        }
-
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            margin-top: 80px;
-        }
-
-        .container {
-            margin-top: 30px;
-        }
-
-        .btn {
-            display: block;
-            width: 200px;
-            padding: 15px;
-            margin: 10px auto;
-            background-color: #3a3d43;
-            color: #f9d7d7; 
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #5b6565;
-        }
-
-        footer {
-            margin-top: 50px;
-            font-size: 14px;
-            opacity: 0.6;
-        }
-
-        .discord-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #7289da; 
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            text-decoration: none;
-            text-align: center;
-            z-index: 20; 
-            transition: background-color 0.3s;
-        }
-
-        .discord-button:hover {
-            background-color: #5b6eae; 
-        }
-    </style>
+    <link rel="stylesheet" href="/structure/style.css">
 </head>
 
 <body>
 
     <div id="header">
-        <h1>Welcome to Z7P.SE</h1>
+        <h1>Welcome to www.Z7P.se</h1>
     </div>
 
-    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
-
-    <div style="color: #f9d7d7" class="main-content">
+    <div class="main-content">
         <p>Select a page to continue:</p>
-
+        
         <div class="container">
+            
             <a href="pages/mcserver.html" class="btn">Minecraft Server</a>
+            
             <a href="pages/aimtrainer.html" class="btn">AimTrainer</a>
+            
             <a href="pages/cases.html" class="btn">CS2 Case Simulator!</a> 
+            
             <a href="pages/agecalculator.html" class="btn">Age Calculator</a>
+            
             <a href="pages/z7pfloat.html" class="btn">Z7PFloat</a>
+            
             <a href="pages/rainchecker.html" class="btn">Rain Checker</a>
-            <a href="pages/potato.html" class="btn">Emotional support potato!</a>        
+            
+            <a href="pages/potato.html" class="btn">Emotional support potato!</a>
+            
             <a href="pages/bluegem.html" class="btn">My Everything</a> 
+            
             <a href="pages/about.html" class="btn">About This Website</a>
+            
             <a href="pages/contact.html" class="btn">Contact</a>
             
         </div>
     </div>
-    </footer>
-
+    
+    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
+    
 </body>
 
 </html>
