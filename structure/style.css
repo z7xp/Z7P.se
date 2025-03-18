@@ -25,6 +25,19 @@ position: fixed;
 top: 0;
 left: 0;
 z-index: 10;
+top: -100px;
+animation: slideDown 0.8s ease-out forwards;
+}
+
+@keyframes slideDown {
+  from {
+    top: -100px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
 }
 
 .main-content 
