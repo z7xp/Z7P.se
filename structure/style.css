@@ -1,51 +1,66 @@
-body, html {
-            font-family: Arial, sans-serif;
-            background-color: #212227;
-            color: #f9d7d7; 
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            flex-direction: column;
-        }
+body,
 
-        #header {
-            background-color: #1a1920;
-            padding: 0px;
-            width: 100%;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-        }
+html
 
-        .main-content {
-            flex-direction: center;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            margin-top: 80px;
-            padding-bottom: 100px;
-        }
+{
+font-family: Arial, sans-serif;
+background-color: #212227;
+color: #f9d7d7; 
+margin: 0;
+padding: 0;
+height: 100%;
+width: 100%;
+flex-direction: column;
+}
 
-        .email {
-            font-size: 20px;
-            font-weight: bold;
-            color: #ff4500;
-        }
+#header 
 
-        a {
-            color: #ff4500;
-            text-decoration: none;
-        }
+{
+background-color: #1a1920;
+padding: 0px;
+width: 100%;
+text-align: center;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 10;
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
+.main-content 
+
+{
+flex-direction: center;
+justify-content: center;
+align-items: center;
+flex-grow: 1;
+margin-top: 80px;
+padding-bottom: 100px;
+}
+
+.email
+
+{
+font-size: 20px;
+font-weight: bold;
+color: #ff4500;
+}
+
+a 
+
+{
+color: #ff4500;
+text-decoration: none;
+}
+
+a:hover 
+
+{
+text-decoration: underline;
+}
 
 footer
+
 {
 margin-top: 50px;
 font-size: 14px;
@@ -53,6 +68,7 @@ opacity: 0.6;
 }
 
 .button
+
 {
 position: fixed;
 bottom: 20px;
@@ -68,6 +84,7 @@ transition: background-color 0.3s;
 }
 
 .button:hover 
+
 {
 background-color: #5b6565;
 }
@@ -86,7 +103,7 @@ font-size: 16px;
 text-decoration: none;
 text-align: center;
 z-index: 20; 
- transition: background-color 0.3s;
+transition: background-color 0.3s;
 }
 
 .discord-button:hover 
@@ -94,7 +111,9 @@ z-index: 20;
 {
 background-color: #5b6eae; 
 }
+
 .container 
+
 {
 margin-top: 30px;
 }
