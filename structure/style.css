@@ -70,6 +70,28 @@ opacity: 0.6;
 .button
 
 {
+display: block;
+width: 200px;
+padding: 15px;
+margin: 10px auto;
+background-color: #3a3d43;
+color: #f9d7d7; 
+text-decoration: none;
+border-radius: 5px;
+font-size: 18px;
+text-align: center;
+transition: 0.3s;
+}
+
+.button:hover
+
+{
+background-color: #5b6565;
+}
+
+.back-button
+
+{
 position: fixed;
 bottom: 20px;
 left: 50%;
@@ -84,7 +106,7 @@ margin: 10px auto;
 transition: background-color 0.3s;
 }
 
-.button:hover 
+.back-button:hover 
 
 {
 background-color: #5b6565;
