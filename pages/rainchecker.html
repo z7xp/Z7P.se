@@ -1,154 +1,57 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
+    
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Is It Raining?</title>
-    <link rel="icon" type="image/png" href="https://www.z7p.se/favicon.png">
-    <style>
-        body, html {
-            font-family: Arial, sans-serif;
-            background-color: #212227; /* Updated color */
-            color: #f9d7d7; /* Updated color */
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-            display: flex;
-            flex-direction: column;
-        }
+    
+    <link rel="icon" type="image/png" href="/media/favicon.png">
 
-        #header {
-            background-color: #1a1920; /* Updated color */
-            padding: 20px;
-            width: 100%;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-        }
-
-        #header h1 {
-            margin: 0;
-        }
-
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            margin-top: 80px; /* To prevent overlap with header */
-        }
-
-        #result {
-            margin: 20px;
-            font-size: 1.5rem;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Button Styling */
-        .back-button {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #444;
-            color: #f9d7d7;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .back-button:hover {
-            background-color: #666;
-        }
-
-        button {
-            background-color: #444;
-            color: #db3b00;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #666;
-        }
-
-        /* Discord Button Styling */
-        .discord-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #7289da; /* Discord's main color */
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            text-decoration: none;
-            text-align: center;
-            z-index: 20; /* Ensuring the button is above other content */
-            transition: background-color 0.3s;
-        }
-
-        .discord-button:hover {
-            background-color: #5b6eae; /* Darker blue for hover effect */
-        }
-
-    </style>
+    <link rel="stylesheet" href="/structure/style.css">
 </head>
+    
 <body>
 
     <div id="header">
         <h1>Is It Raining?</h1>
     </div>
 
-    <!-- Discord Button -->
-    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
-
     <div class="main-content">
-        <div class="button-container">
+        <div class="button">
             <button onclick="checkRain()">Analyze</button>
         </div>
         <div id="result"></div>
     </div>
-
-    <!-- Back to Home Page Button -->
-    <a href="/index.html" class="back-button">Back to Home Page</a>
 
     <script>
         function checkRain() {
             const resultElement = document.getElementById('result');
             let dots = 0;
             const text = "Analyzing";
-            resultElement.textContent = text + ".";  // Initial text
+            resultElement.textContent = text + ".";
 
-            // Function to update text content with dots animation
             const interval = setInterval(() => {
-                dots = (dots + 1) % 4; // Cycle between 1 and 3 dots
+                dots = (dots + 1) % 4;
                 resultElement.textContent = text + '.'.repeat(dots);
-            }, 500); // Update every 500ms
+            }, 500);
 
-            // After 20 seconds, stop the animation and display "Check outside"
             setTimeout(() => {
-                clearInterval(interval); // Stop the interval
-                resultElement.textContent = "Check outside."; // Final message
-            }, 20000); // 20 seconds delay
+                clearInterval(interval);
+                resultElement.textContent = "Check outside.";
+            }, 20000);
         }
+
+    <a href="/index.html" class="back-button">Back to Home Page</a>
+
+    <a href="https://discord.gg/4P8cJzmC6t" class="discord-button" target="_blank">Discord</a>
+        
     </script>
 
 </body>
+
 </html>
