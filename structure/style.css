@@ -99,13 +99,14 @@ text-decoration: none;
 border-radius: 5px;
 font-size: 18px;
 text-align: center;
-transition: 0.3s;
+transition: transform 0.3s ease-out;
 }
 
 .button:hover
 
 {
 background-color: #5b6565;
+transform: scale(1.1);
 }
 
 .back-button
