@@ -44,7 +44,7 @@
     <div class="main-content">
         <img src="/media/potato.png" alt="Potato" class="potato-img" id="potato-img">
         <p class="message" id="potato-message">click to start!</p>
-        <button class="button" onclick="changeMessage()">Give me support</button>
+        <button class="button" id="support-button" onclick="changeMessage()">Give me support</button>
     </div>
 
     <audio id="normal-sound" src="/media/nomnomnom.ogg"></audio>
@@ -66,6 +66,7 @@
         const potatoImage = document.getElementById("potato-img");
         const normalSound = document.getElementById("normal-sound");
         const specialSound = document.getElementById("special-sound");
+        const button = document.getElementById("support-button");
 
         function changeMessage() 
             {
