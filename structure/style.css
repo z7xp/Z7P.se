@@ -122,13 +122,13 @@ transition: transform 0.3s ease-out;
 {
 background-color: #5b6565;
 transform: scale(1.1);
-box-shadow: 0 0 10px #000000;
+box-shadow: 0 0 10px #0c1325;
 }
 
 .button:active 
 {
 transform: scale(0.9);
-box-shadow: 0 0 15px #000000;
+box-shadow: 0 0 15px #0c1325;
 }
 
 
@@ -146,7 +146,7 @@ text-decoration: none;
 font-size: 18px;
 border-radius: 5px;
 margin: 10px auto;
-animation: zoomIn 0.8s ease-out forwards;
+transition: transform 0.3s ease-out;
 }
 
 .back-button:hover 
