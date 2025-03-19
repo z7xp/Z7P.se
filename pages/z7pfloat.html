@@ -26,37 +26,18 @@
       overflow: hidden;
       }
     
-    .greenbutton-container 
-    
-      {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
-      z-index: 20;
-      }
-    
     .button
     
       {
+      width: 20px;
       color: #f9d7d7; 
+      background-color: #038e41;
       }
     
-    .greenbutton:hover 
+    .button:hover 
     
       {
       background-color: #db3b00;
-      transform: scale(1.1);
-      box-shadow: 0 0 10px #0c1325;
-      }
-
-    .button:active 
-    
-      {
-      transform: scale(0.9);
-      box-shadow: 0 0 15px #0c1325;
       }
 
     .z7p 
@@ -86,7 +67,7 @@
   </div>
   
   <div class="greenbutton-container" id="autoButtons" style="display: none;">
-    <button class="greenbutton" id="switchToManualButton">Switch to Manual Mode</button>
+    <button class="button" id="switchToManualButton">Switch to Manual Mode</button>
   </div>
 
   <script>
