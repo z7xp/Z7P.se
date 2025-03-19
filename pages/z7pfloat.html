@@ -18,13 +18,17 @@
   
     body, html
     
-    #container {
+    #container 
+    
+      {
       flex-grow: 1;
       position: relative;
       overflow: hidden;
-    }
+      }
     
-    .greenbutton-container {
+    .greenbutton-container 
+    
+      {
       position: fixed;
       top: 20px;
       left: 20px;
@@ -32,26 +36,48 @@
       flex-direction: row;
       gap: 10px;
       z-index: 20;
-    }
-    .greenbutton {
-      padding: 10px 20px;
-      font-size: 16px;
+      }
+    
+    .greenbutton
+    
+      {
+      width: 200px;
+      padding: 15px;
+      margin: 10px auto;
       background-color: #038e41;
-      color: #f9d7d7;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .greenbutton:hover {
+      color: #f9d7d7; 
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 18px;
+      text-align: center;
+      transition: transform 0.3s ease-out;
+      box-shadow: 0 0 10px #0c1325;
+      }
+    
+    .greenbutton:hover 
+    
+      {
       background-color: #db3b00;
-    }
+      transform: scale(1.1);
+      box-shadow: 0 0 10px #0c1325;
+      }
 
-    .z7p {
+    .button:active 
+    
+      {
+      transform: scale(0.9);
+      box-shadow: 0 0 15px #0c1325;
+      }
+
+    .z7p 
+    
+    {
       position: absolute;
       width: 64px;
       height: 64px;
       cursor: pointer;
     }
+    
   </style>
   
 </head>
@@ -70,7 +96,7 @@
   </div>
   
   <div class="greenbutton-container" id="autoButtons" style="display: none;">
-    <button id="switchToManualButton">Switch to Manual Mode</button>
+    <button class="greenbutton" id="switchToManualButton">Switch to Manual Mode</button>
   </div>
 
   <script>
