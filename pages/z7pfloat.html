@@ -87,12 +87,12 @@
     let z7pInterval = null;
 
     function playVineBoomSound() {
-      const vineBoomSound = new Audio("https://www.z7p.se/media/vineboom.mp3");
+      const vineBoomSound = new Audio("/media/vineboom.mp3");
       vineBoomSound.play().catch(error => console.error("Error playing VineBoom:", error));
     }
 
     function playExplosionSound() {
-        const explosionSound = new Audio("https://www.z7p.se/media/explosion.ogg");
+        const explosionSound = new Audio("/media/explosion.ogg");
       explosionSound.play().catch(error => console.error("Error playing explosion sound:", error));
     }
 
@@ -101,7 +101,7 @@
       const topPos = z7p.style.top;
 
       const explosion = document.createElement('img');
-      explosion.src = 'https://www.z7p.se/media/explosion.gif';
+      explosion.src = '/media/explosion.gif';
       explosion.classList.add('z7p');
       explosion.style.left = leftPos;
       explosion.style.top = topPos;
@@ -116,7 +116,7 @@
 
     function createZ7P() {
       const z7p = document.createElement('img');
-      z7p.src = 'https://www.z7p.se/media/z7p.png';
+      z7p.src = '/media/z7phd.png';
       z7p.classList.add('z7p');
       container.appendChild(z7p);
       playVineBoomSound();
@@ -147,7 +147,7 @@
 
     addZ7PButton.addEventListener('click', function() {
       const z7p = document.createElement('img');
-      z7p.src = 'https://www.z7p.se/media/z7p.png';
+      z7p.src = '/media/z7phd.png';
       z7p.classList.add('z7p');
       container.appendChild(z7p);
       playVineBoomSound();
