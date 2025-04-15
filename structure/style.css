@@ -7,8 +7,8 @@ html
 {
 display:flex;
 font-family: Arial, sans-serif;
-background-color: #212227;
-color: #f9d7d7; 
+background-color: #212125;
+color: #ffffff; 
 margin: 0;
 padding: 0;
 height: 100%;
@@ -19,17 +19,16 @@ flex-direction: column;
 #header 
 
 {
-display: block;
-background-color: #1a1920;
+display: fixed;
+background-color: #111116;
 width: 100%;
 text-align: center;
 position: fixed;
 font-size:18;
 top: 0;
-left: 0;
 z-index: 10;
 top: -100px;
-box-shadow: 0 0 10px #0c1325;
+box-shadow: 0 0 10px #060511;
 animation: slideDown 0.8s ease-out forwards;
 }
 
@@ -57,7 +56,7 @@ width: 200px;
 padding: 15px;
 margin: 10px auto;
 background-color: #3a3d43;
-color: #f9d7d7; 
+color: #ffffff; 
 text-decoration: none;
 border-radius: 5px;
 font-size: 18px;
@@ -95,7 +94,7 @@ animation: zoomIn 0.8s ease-out forwards;
 .backbutton 
 {
 background-color: #3a3d43;
-color: #f9d7d7;
+color: #ffffff;
 padding: 15px 30px;
 text-decoration: none;
 font-size: 18px;
@@ -126,8 +125,8 @@ box-shadow: 0 0 15px #0c1325;
 position: fixed;
 top: 20px;
 right: 20px;
-background-color: #7289da;
-color: white;
+background-color: #7289DA;
+color: #ffffff;
 padding: 10px 20px;
 border-radius: 5px;
 font-size: 18px;
