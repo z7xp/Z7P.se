@@ -1,38 +1,83 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
+    
 <head>
-
+    
     <meta name="author" content="Z7P">
-
+    
     <meta charset="UTF-8">
-
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
     <title>Welcome to Z7P</title>
-
+    
     <link rel="stylesheet" href="/structure/style.css">
 
     <style>
-
-        .potato-img 
+        
+        body
+        
         {
-            width: 200px;
-            height: auto;
-            margin-top: 0px;
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
         }
 
+        .bouncing-container
+        
+        {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-family: sans-serif;
+        }
+
+        .potato-img {
+            width: 200px;
+            height: auto;
+        }
     </style>
-
+    
 </head>
-
+    
 <body>
 
-    <div class="main-content">
+    <div class="bouncing-container" id="potato">
         <p>Le potato</p>
         <img src="https://www.z7p.se/media/potato.png" class="potato-img">
     </div>
+
+    <script>
+        const container = document.getElementById("potato");
+
+        let x = 100;
+        let y = 100;
+        let dx = 2;
+        let dy = 2;
+
+        function move() {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const rect = container.getBoundingClientRect();
+
+            if (x + rect.width >= screenWidth || x <= 0) dx *= -1;
+            if (y + rect.height >= screenHeight || y <= 0) dy *= -1;
+
+            x += dx;
+            y += dy;
+
+            container.style.left = x + "px";
+            container.style.top = y + "px";
+
+            requestAnimationFrame(move);
+        }
+
+        move();
+    </script>
 
 </body>
     
